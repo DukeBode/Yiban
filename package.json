@@ -1,0 +1,12 @@
+{
+  "name": "yiban-mp",
+  "version": "1.0.3",
+  "main": "index.js",
+  "repository": "https://github.com/DukeBode/yiban-mp",
+  "author": "DukeBode <duke123@aliyun.com>",
+  "license": "MIT",
+  "dependencies": {
+    "nunjucks": "^3.1.7",
+    "sha1": "^1.1.1"
+  }
+}
