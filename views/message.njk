@@ -1,0 +1,43 @@
+<xml>
+<ToUserName><![CDATA[toUser]]></ToUserName>
+<FromUserName><![CDATA[fromUser]]></FromUserName>
+<CreateTime>{{ createTime }}</CreateTime>
+<MsgType><![CDATA[{{ msgType }}]]></MsgType>
+
+{% if msgType === "text" %}
+<Content><![CDATA[{{ 你好 }}]]></Content>
+
+{% elif msgType === "image" %}
+<Image>
+<MediaUrl><![CDATA[mediaurl]]></MediaUrl>
+</Image>
+
+{% elif msgType === "voice" %}
+<Voice>
+<item>
+<MediaUrl><![CDATA[mediaurl]]></MediaUrl>
+<Length><![CDATA[10]]></Length>
+</item>
+</Voice>
+
+{% elif msgType === "location" %}
+<Address><![CDATA[address]]></Address>
+<Coordinates><![CDATA[coordinates]]></Coordinates>
+
+{% elif msgType === "link" %}
+<Content><![CDATA[url]]></Content>
+
+{% elif msgType === "new" %}
+<ArticleCount>{{ count }}</ArticleCount>
+<Articles>
+{% for article in articles %}
+<item>
+<Title><![CDATA[title]]></Title> 
+<Description><![CDATA[description]]></Description>
+<PicUrl><![CDATA[picurl]]></PicUrl>
+<Url><![CDATA[url]]></Url>
+</item>
+{{% endfor %}}
+</Articles>
+{% endif %}
+</xml>
