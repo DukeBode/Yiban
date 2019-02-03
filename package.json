@@ -7,6 +7,7 @@
   "license": "MIT",
   "dependencies": {
     "nunjucks": "^3.1.7",
-    "sha1": "^1.1.1"
+    "sha1": "^1.1.1",
+    "xml2js": "^0.4.19"
   }
 }
