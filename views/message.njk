@@ -1,6 +1,6 @@
 <xml>
-<ToUserName><![CDATA[toUser]]></ToUserName>
-<FromUserName><![CDATA[fromUser]]></FromUserName>
+<ToUserName><![CDATA[{{ toUserName }}]]></ToUserName>
+<FromUserName><![CDATA[{{ fromUserName }}]]></FromUserName>
 <CreateTime>{{ createTime }}</CreateTime>
 <MsgType><![CDATA[{{ msgType }}]]></MsgType>
 
@@ -37,7 +37,7 @@
 <PicUrl><![CDATA[picurl]]></PicUrl>
 <Url><![CDATA[url]]></Url>
 </item>
-{{% endfor %}}
+{% endfor %}
 </Articles>
 {% endif %}
 </xml>
