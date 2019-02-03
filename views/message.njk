@@ -5,37 +5,37 @@
 <MsgType><![CDATA[{{ msgType }}]]></MsgType>
 
 {% if msgType === "text" %}
-<Content><![CDATA[{{ 你好 }}]]></Content>
+<Content><![CDATA[{{ message.content }}]]></Content>
 
 {% elif msgType === "image" %}
 <Image>
-<MediaUrl><![CDATA[mediaurl]]></MediaUrl>
+<MediaUrl><![CDATA[{{ message.mediaurl }}]]></MediaUrl>
 </Image>
 
 {% elif msgType === "voice" %}
 <Voice>
 <item>
-<MediaUrl><![CDATA[mediaurl]]></MediaUrl>
-<Length><![CDATA[10]]></Length>
+<MediaUrl><![CDATA[{{ message.mediaurl }}]]></MediaUrl>
+<Length><![CDATA[ 10]]></Length>
 </item>
 </Voice>
 
 {% elif msgType === "location" %}
-<Address><![CDATA[address]]></Address>
-<Coordinates><![CDATA[coordinates]]></Coordinates>
+<Address><![CDATA[{{ message.address }}]]></Address>
+<Coordinates><![CDATA[{{ message.coordinates }}]]></Coordinates>
 
 {% elif msgType === "link" %}
-<Content><![CDATA[url]]></Content>
+<Content><![CDATA[{{ message.url }}]]></Content>
 
 {% elif msgType === "new" %}
-<ArticleCount>{{ count }}</ArticleCount>
+<ArticleCount>{{ message.count }}</ArticleCount>
 <Articles>
-{% for article in articles %}
+{% for article in message.articles %}
 <item>
-<Title><![CDATA[title]]></Title> 
-<Description><![CDATA[description]]></Description>
-<PicUrl><![CDATA[picurl]]></PicUrl>
-<Url><![CDATA[url]]></Url>
+<Title><![CDATA[{{ article.title }}]]></Title> 
+<Description><![CDATA[{{ article.description }}]]></Description>
+<PicUrl><![CDATA[{{ article.picurl }}]]></PicUrl>
+<Url><![CDATA[{{ article.url }}]]></Url>
 </item>
 {% endfor %}
 </Articles>

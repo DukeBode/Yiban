@@ -25,7 +25,8 @@ let reply = (msgType, fromUserName, toUserName, message) => {
         'toUserName': toUserName,
         'fromUserName': fromUserName,
         'createTime': new Date().getTime(),
-        'msgType': msgType
+        'msgType': msgType,
+        'message':message
     })
 };
 
