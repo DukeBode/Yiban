@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <title>易月动态</title>
+    <base target="_blank">
+    <style>
+        * {
+            /* margin: 0;
+            padding: 0; */
+            font-size: 18px;
+            font-weight: normal;
+        }
+        
+        li {
+            text-indent: 0.5rem;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>易月动态 <small>2018-11-05</small></h1>
+    <section>
+        <h2>文件说明</h2>
+        <ul>
+            <li>/code/ 供二维码存放</li>
+            <li>/edata.py 用于获取微社区的发帖信息，使用前需根据修改相关内容</li>
+            <li>/eqrcode.py 用于批量生成二维码</li>
+            <li>/Template.docx 易月动态模板，可使用 clean.bat 重建</li>
+            <li>/readme.md 本文档</li>
+        </ul>
+    </section>
+    <section>
+        <h2>二维码</h2>
+        <ol>
+            <li>Excel 整理数据</li>
+            <li>确保所有文件名不能包含下列任何字符 <pre>\/:*?<>|</pre></li>
+            <li>复制至txt文档中</li>
+            <li>python eqr</li>
+            <li>打开 code 文件夹</li>
+            <li>确认数量，全选，生成 code.zip</li>
+            <li>重命名分享</li>
+        </ol>
+    </section>
+    <section>
+        <h2>特色学院轻应用</h2>
+        <ol>
+            <li>导出上月1日至本月1日的轻应用数据</li>
+            <li>筛选数据选定合适的时间</li>
+            <li>pv改为浏览量，按浏览量排名选取前五，校级不得超过两条</li>
+            <li>删除创建者ID、应用状态、发布时间等列</li>
+            <li>整理内容，以序号、机构、轻应用名称、添加人数、浏览量的顺序整理</li>
+            <li>机构根据用户姓名及应用名称填写，以 LUT 的院系设置为准</li>
+        </ol>
+    </section>
+    <section>
+        <h2>易班头条</h2>
+        <ol>
+            <li>文本编辑器打开 Edata 文件 设置 lut.save() 变量</li>
+            <li>python Edata</li>
+            <li>获取点击量排行（前100）</li>
+            <li>粘贴至 excel 表</li>
+            <li>$分列，筛选，排序</li>
+            <li>删除通知类，按浏览量排名选取前五，校级不得超过两条</li>
+            <li>整理内容，序号、机构、标题、访问量的顺序整理</li>
+            <li>机构根据用户姓名及话题名称填写，以 LUT 的院系设置为准</li>
+            <li>重命名后分享</li>
+        </ol>
+    </section>
+    <section>
+        <h2>附：</h2>
+        <ul>
+            <li>LUT 院系设置 <a href="http://www.lut.cn/www/HdClsContentMain.asp?ClassId=10">官网</a></li>
+            <li>7-zip压缩软件 <a href="https://www.7-zip.org/">官网</a></li>
+            <li>VSCode编辑器 <a href="https://code.visualstudio.com/">官网</a></li>
+            <li>powershell/cmd 打开： 工作目录下按住shift右键打开</li>
+            <li>重置程序：shell 执行 install.bat</li>
+        </ul>
+    </section>
+    <footer>
+        <p>&copy; 2010-2018 Duke Studio</p>
+    </footer>
+</body>
+
+
+</html>

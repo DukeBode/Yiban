@@ -1,4 +1,4 @@
-# 生成带logo的二维码图片
+﻿# 生成带logo的二维码图片
 import qrcode
 from PIL import Image
 import os
@@ -56,6 +56,6 @@ if __name__ == '__main__':
     files = open(filename, 'r')
     for eachLine in files:
         name = eachLine.split('\t')[0] + '.png'
-        logo = 'Elogo.png'
+        logo = 'program/Elogo.png'
         url = eachLine.split('\t')[1]
         make_logo_qr(url, logo, name)
