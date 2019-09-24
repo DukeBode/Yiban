@@ -10,13 +10,13 @@ import sqlite3
 class MicroCommunity:
     def __init__(self):
         self.article_url = 'https://www.yiban.cn/forum/article/listAjax'
-        self.post = dict(channel_id=55461, group_id=0, my=0, need_notice=0, orderby='updateTime', page=1, puid=5189448,
+        self.post = dict(channel_id=55461, group_id=0, my=0, need_notice=0, orderby='updateTime', page=4, puid=5189448,
                          Sections_id=-1, size=200)
         self.del_content = ['Channel_id', 'User_id', 'isNotice', 'isWeb', 'replyTime', 'updateTime',
                              'UserGroup_id', 'oldArtId', 'oldAreaId', 'content', 'files_count',
                             'Sections_name', 'aid', 'images', 'editPermission', 'delPermission', 'sections_title'
-                            ]#, 'isLocked''status',
-        # 
+                            ]
+        #, 'isLocked''status',
         self.c_name = ['新韵能源','魅力材料','明德机电','菁华土木','尚学电信','慎微软件','风华能动','炫彩生命','精进理学','计通新闻','计通学院','青春法学','励志外院','韶华经管','至美设计','多彩石化','石小易']
         self.num = 1
         self.file = 'MicroCommunity'
@@ -26,7 +26,8 @@ class MicroCommunity:
         url = requests.post(self.article_url, data=self.post)
         state = url.status_code
         if state == 200:
-            url_content = url.json()  # web_content = url.text.encode('utf-8').decode('unicode_escape')
+            url_content = url.json()  
+            # web_content = url.text.encode('utf-8').decode('unicode_escape')
             # content = url_content['data']['list']
             return url_content['data']['list']
 
@@ -34,7 +35,6 @@ class MicroCommunity:
         for key in self.del_content:
             del item[key]
         return item
-
 
     def save(self, time='02',table='table0'):
         item = str(self.item).replace('\'', '')
@@ -47,14 +47,14 @@ class MicroCommunity:
         state = 1
         while state:
             for line in self.content():
+                self.post['lastId']=line['aid']
                 print(line['createTime'])
-                # print(line)
-                if line['updateTime'][:3] == time+'-':
-                    # \or line_content['createTime'][5:7] == time:
+                if line['updateTime'][:3] == time+'-' or line['updateTime'][5:7] == time:
                     state = 0
                     break
                 line_content = self.delete(line)
                 line_content['author'] = line_content['author']['name']
+                # print(line_content.keys())
                 data = str(tuple(line_content.values()))
                 c.execute(f'INSERT INTO {table} {item} VALUES {data}')
                 print(data)
@@ -74,21 +74,24 @@ class MicroCommunity:
         content = c.execute(f'SELECT * FROM {table}')
         dict = {}
         k=0
+        # print("id,标题,,评论，更新日期，点击量，点赞量，未屏蔽，，作者，链接")
+        print("'id', 'title', 'isLocked', 'replyCount', 'createTime', 'clicks', 'upCount', 'status', 'Sections_id', 'hotScore', 'kid', 'author', 'url'")
         for line in content:
             if line[1].find(keyw)!=-1:
-                if line[4][:2] == mouth:
+                if line[4][:2] == mouth or line[4][5:7]==mouth:
                     if line[7]=='1':
                         dict.setdefault(keyw, 0)#字典初始化
                         dict[keyw] += 1
                         # print(line)
                     else:
                         k=k+1
-                        print(k,end='\t')
-                        print(line[4]+' '+line[1]+' http//www.yiban.cn'+line[10])
+                        # print(k,end='\t')
+                        # print(line[4]+' '+line[1]+' http//www.yiban.cn'+line[12])
                     # print(line[7],end='')
+                    print(line)
         db.commit()
         db.close()
-        return dict
+        return dict    
 
     # 排行
     def top(self, key, num, table='table0'):
@@ -197,11 +200,11 @@ def show():
 if __name__ == '__main__':
     lut = MicroCommunity()
     # 月份减一，只首次运行
-    lut.save('08')
+    lut.save('06')
     # 点击量排行
     lut.top_clicks(100)
     # 本月，关键词数量统计
-    # print(lut.count(keyw='魅力材料',mouth='05'))
+    lut.count(keyw='流技术',mouth='99')
     # 院发帖统计
     # lut.c_count(mouth0='06')
     # 回复
