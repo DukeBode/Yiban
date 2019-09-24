@@ -56,6 +56,6 @@ if __name__ == '__main__':
     files = open(filename, 'r')
     for eachLine in files:
         name = eachLine.split('\t')[0] + '.png'
-        logo = 'LOGO.png'
+        logo = 'Elogo.png'
         url = eachLine.split('\t')[1]
         make_logo_qr(url, logo, name)
