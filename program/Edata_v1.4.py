@@ -10,7 +10,7 @@ import sqlite3
 class MicroCommunity:
     def __init__(self):
         self.article_url = 'https://www.yiban.cn/forum/article/listAjax'
-        self.post = dict(channel_id=55461, group_id=0, my=0, need_notice=0, orderby='updateTime', page=4, puid=5189448,
+        self.post = dict(channel_id=55461, group_id=0, my=0, need_notice=0, orderby='updateTime', page=1, puid=5189448,
                          Sections_id=-1, size=200)
         self.del_content = ['Channel_id', 'User_id', 'isNotice', 'isWeb', 'replyTime', 'updateTime',
                              'UserGroup_id', 'oldArtId', 'oldAreaId', 'content', 'files_count',
