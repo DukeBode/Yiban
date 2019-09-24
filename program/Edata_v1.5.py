@@ -68,27 +68,28 @@ class MicroCommunity:
         file.close()
 
     # 标题关键词计数
-    def count(self, table='table0',keyw='红柳易讯',mouth='04'):
+    def count(self, table='table0',keyw='红柳易讯',mouth='04',group=True):
         db = sqlite3.connect(self.file + '.db')
         c = db.cursor()
         content = c.execute(f'SELECT * FROM {table}')
         dict = {}
         k=0
-        # print("id,标题,,评论，更新日期，点击量，点赞量，未屏蔽，，作者，链接")
-        print("'id', 'title', 'isLocked', 'replyCount', 'createTime', 'clicks', 'upCount', 'status', 'Sections_id', 'hotScore', 'kid', 'author', 'url'")
+        if group:
+            print("id,标题,,评论，更新日期，点击量，点赞量，未屏蔽，，作者，链接")
+            print("'id', 'title', 'isLocked', 'replyCount', 'createTime', 'clicks', 'upCount', 'status', 'Sections_id', 'hotScore', 'kid', 'author', 'url'")
         for line in content:
             if line[1].find(keyw)!=-1:
                 if line[4][:2] == mouth or line[4][5:7]==mouth:
                     if line[7]=='1':
                         dict.setdefault(keyw, 0)#字典初始化
                         dict[keyw] += 1
-                        # print(line)
                     else:
                         k=k+1
                         # print(k,end='\t')
                         # print(line[4]+' '+line[1]+' http//www.yiban.cn'+line[12])
                     # print(line[7],end='')
-                    print(line)
+                    if group:
+                        print(line)
         db.commit()
         db.close()
         return dict    
@@ -104,7 +105,6 @@ class MicroCommunity:
             number = len(data)
             if number > num:
                 data = data[:num]
-            # print(line)
             data.append(dict(zip(self.item, line)))
             while number > 1:
                 number -= 1
@@ -164,21 +164,22 @@ class MicroCommunity:
 
     # 回复排行
     def top_reply_count(self, num=5): self.top(3, num)
-
     # 点赞排行榜
     def top_up_count(self, num=5): self.top(6, num)
+
 
     def c_count(self,mouth0='04'):
         c_dict={}
         k=0
         for line in self.c_name:
-            item=self.count(keyw=line, mouth=mouth0)
-            c_dict[line]=item[line]
+            item=self.count(keyw=line, mouth=mouth0,group=False)
+            c_dict[line]=item[line] if item else 0
         for c_line in c_dict.keys():
             k=k+1
             print(k,end='\t')
             print(c_line,end='\t')
             print(c_dict[c_line])
+        
 
     # def xlsx(self, content):
     #     content_book = Workbook()
@@ -200,13 +201,13 @@ def show():
 if __name__ == '__main__':
     lut = MicroCommunity()
     # 月份减一，只首次运行
-    lut.save('06')
+    # lut.save('03')
     # 点击量排行
-    lut.top_clicks(100)
-    # 本月，关键词数量统计
-    lut.count(keyw='流技术',mouth='99')
-    # 院发帖统计
-    # lut.c_count(mouth0='06')
+    # lut.top_clicks(100)
+    # 本月，关键词统计帖子
+    # lut.count(keyw='流技术',mouth='04')
+    # 院发帖数量统计
+    lut.c_count(mouth0='04')
     # 回复
     # lut.top_reply_count(num=100)
     # 点赞
