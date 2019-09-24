@@ -51,10 +51,10 @@ class MicroCommunity:
         while state:
             for line in self.content():
                 self.post['lastId']=line['aid']
-                print(line['createTime'])
                 if line['updateTime'][:3] == time+'-' or line['updateTime'][5:7] == time:
                     state = 0
                     break
+                # print(line['createTime'])
                 line_content = self.delete(line)
                 line_content['author'] = line_content['author']['name']
                 # print(line_content.keys())
@@ -82,7 +82,7 @@ class MicroCommunity:
                     dict.setdefault(keyw, 0)#字典初始化
                     dict[keyw] += 1
                 else:k=k+1
-                if group:print(line)
+            if group:print(line)
         db.commit()
         db.close()
         return dict    
@@ -145,13 +145,13 @@ class MicroCommunity:
 if __name__ == '__main__':
     lut = MicroCommunity()
     # 月份减一，只首次运行
-    # lut.save('03')
+    # lut.save('04')
     # 点击量排行
     # lut.top_clicks(100)
     # 本月，关键词统计帖子
-    # lut.count(keyw='易流技术',mouth='04')
+    # lut.count(keyw='易流技术')
     # 院发帖数量统计
-    # lut.c_count(mouth0='04')
+    # lut.c_count(mouth0='05')
     # 回复
     # lut.top_reply_count(num=100)
     # 点赞
