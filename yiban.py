@@ -44,11 +44,12 @@ class Yiban:
     
 # 数据库
 class Database:
-    def __init__(self,filename='yiban'):
-        t=strftime('%d%H%M%S',localtime(time()))
+    def __init__(self,filename='yiban',recreate=True):
+        t=strftime('%d',localtime(time()))
         # t=datetime.datetime.now().strftime("%H%M%S")
         self.db_name=f"{filename}{t}.db"
-        if os.path.isfile(self.db_name):os.remove(self.db_name)
+        if os.path.isfile(self.db_name) and recreate==True:
+            os.remove(self.db_name)
         self.item={}
     
     def __sql(self,db_name,sql):
@@ -78,18 +79,26 @@ class Forum:
     def __init__(self,puid=5189448,DATABASE=True):
         self.post = dict(channel_id=55461, group_id=0, my=0, need_notice=0, 
         orderby='updateTime', page=1, puid=puid, Sections_id=-1)
-        # 创建数据库
-        self.db = Database() if DATABASE else None
+        self.canWrite = False
+        self.db = None
+        if DATABASE:
+            if input('重建数据库？(Y/N)')=='Y':
+                self.canWrite=True
+            # 创建数据库
+            self.db = Database(recreate=self.canWrite)
         # 初始化 heads 数据
         self.__head()
-
+    
+    @property
+    def head(self):
+        return self.heads
     @property
     def __tmp(self):
         data=Yiban.postUrl('https://www.yiban.cn/forum/article/listAjax', self.post)
         return data.json()['data']['list']
     
     def __create(self,title,dict):
-        if self.db:
+        if self.db and self.canWrite:
             self.db.create(title,str(tuple(dict)).replace('\'','').replace('-',''))
 
     # 建立二级 head
@@ -124,7 +133,7 @@ class Forum:
         value = value.replace('None','\'None\'')
         value = value.replace('True','\'True\'')
         value = value.replace('False','\'False\'')
-        if self.db:self.db.insert(title,value)
+        if self.db and self.canWrite:self.db.insert(title,value)
         print(value)
     
     def getArticles(self,firstDay=strftime('%Y-%m-%d',localtime(time())),size=20):
@@ -155,24 +164,6 @@ class Forum:
         except:
             print('输入错误！！！')
             return []
-
-    # 关键词统计
-    # * FROM articles WHERE title LIKE "%易流技术%" OR content LIKE "%易流技术%" ORDER BY clicks*1 DESC
-    # 点击量排行
-    # * FROM articles ORDER BY clicks*1 DESC LIMIT 100
-    # 评论量排行
-    # * FROM articles ORDER BY replyCount+0 DESC LIMIT 100
-    # 点赞量排行
-    # * FROM articles ORDER BY upCount*1 DESC LIMIT 100
-    # 个人发帖情况
-    # user_id,author.name,COUNT(user_id),SUM(clicks),SUM(upCount),SUM(replyCount) FROM articles,author WHERE author.id=user_id GROUP BY user_id ORDER BY COUNT(user_id) DESC
-
-    # 用户发帖
-    # * FROM articles WHERE user_id="29171346" ORDER BY clicks*1 DESC
-    # 作者信息查询
-    # DISTINCT * FROM author WHERE id="29171346"
-    # 帖子图片
-    # * from IMAGES WHERE ID="90723390"
 
 # 话题
 class Article:
@@ -214,7 +205,10 @@ class Article:
 
 if __name__=='__main__':
     lut = Forum(5189448)
-    lut.getArticles()
+    for line in lut.head:
+        print(line)
+        print(lut.head[line])
+    if input('确定获取数据(Y/N)')=='Y':lut.getArticles(firstDay='2019-09-01',size=200)
     os.system("cls")
     print('''
     # 关键词统计
@@ -240,8 +234,10 @@ if __name__=='__main__':
         val=input("sql> ")
         for line in lut.sql(val):
             print(i,end='')
+            i+=1
             for item in line:
                 print('$',item,end='')
+            print()
 
     # article= Article()
     # article.content
