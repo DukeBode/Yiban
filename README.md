@@ -1,5 +1,8 @@
-# yiban
 # 易班微社区统计
+
+# 下载
+- 压缩包：https://github.com/DukeBode/yiban/archive/Python.zip
+- git 命令：`git clone -b Python https://github.com/DukeBode/yiban.git`
 
 ### 程序功能
 - [x] 通过标题关键词统计指定时间段内发过的帖子
