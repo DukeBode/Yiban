@@ -133,8 +133,6 @@ class Forum:
         else:
             update = update[:10]
         print(update)
-        update = mktime(strptime(update,"%Y-%m-%d"))
-        start = mktime(strptime(start,"%Y-%m-%d"))
         return update < start
 
     def __str(self,val):
