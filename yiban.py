@@ -1,5 +1,5 @@
 import sys,os,re
-from time import strftime,localtime,time
+from time import strftime,localtime,time,strptime,mktime
 import openpyxl,sqlite3
 import requests
 
@@ -9,6 +9,8 @@ class Yiban:
     # data 二维数据
     @classmethod
     def excel(cls,filename,data):
+        if os.path.isfile(filename):
+            os.remove(filename)
         wb = openpyxl.Workbook()
         ws = wb.active
         for item in data:
@@ -52,27 +54,31 @@ class Database:
             os.remove(self.db_name)
         self.item={}
     
-    def __sql(self,db_name,sql):
+    def __sql(self,db_name,sqls):
         content=[]
         db = sqlite3.connect(db_name)
         c = db.cursor()
-        content = c.execute(sql).fetchall()
+        for sql in sqls:
+            content = c.execute(sql).fetchall()
         db.commit()
         db.close()
         return content
     
     # 创建表
     def create(self,table,item):
-        self.__sql(self.db_name,f'''create table {table}{item}''')
+        self.__sql(self.db_name,[f'''create table {table}{item}'''])
         self.item[table]=item
     
     # 插入数据
     def insert(self,table,data):
-        self.__sql(self.db_name,f'''INSERT INTO {table} {self.item[table]} VALUES {data}''')
+        str=[]
+        for val in data:
+            str.append(f'''INSERT INTO {table} {self.item[table]} VALUES {val}''')
+        self.__sql(self.db_name,str)
 
     # 数据查询
     def select(self,data):
-        return self.__sql(self.db_name,f'''SELECT {data}''')
+        return self.__sql(self.db_name,[f'''SELECT {data}'''])
 
 # 微社区
 class Forum:
@@ -122,40 +128,53 @@ class Forum:
     # 发帖日期比较
     def compareDay(self,update,start):
         year = strftime('%Y-',localtime(time()))
-        # 月份比较
-        if year + update[:3]==start[:8] or update[:8]==start[:8]:
-            # 日期比较
-            return int(update[3:5]) < int(start[8:])
-        return False
-    
-    def __insert(self,title,value):
-        value = str(tuple(value))
-        value = value.replace('None','\'None\'')
-        value = value.replace('True','\'True\'')
-        value = value.replace('False','\'False\'')
-        if self.db and self.canWrite:self.db.insert(title,value)
-        print(value)
+        if update[2]=='-':
+            update = year+update[:5]
+        else:
+            update = update[:10]
+        print(update)
+        update = mktime(strptime(update,"%Y-%m-%d"))
+        start = mktime(strptime(start,"%Y-%m-%d"))
+        return update < start
+
+    def __str(self,val):
+        val = str(tuple(val))
+        val = val.replace('None','\'None\'')
+        val = val.replace('True','\'True\'')
+        val = val.replace('False','\'False\'')
+        # print(val)
+        return val
+
+    def __insert(self,sqls):
+        for sql in sqls:
+            if self.db and self.canWrite:
+                self.db.insert(sql,sqls[sql])
     
     def getArticles(self,firstDay=strftime('%Y-%m-%d',localtime(time())),size=20):
         while True:
             self.post['size'] = size
             data = self.__tmp
+            sqls={}
             for item in data:
                 for key in self.heads:
                     if key=='data':continue
                     elif self.heads[key]=='list':
+                        # 存储子数组
                         for val in item[key]:
-                            self.__insert(key,[item['id'],val])
+                            sqls.setdefault(key, [])
+                            sqls[key].append(self.__str([item['id'],val]))
                         item[key] = 'DBlist'
                     else:
                         if self.sql(f'''id FROM author WHERE id="{item[key]['id']}"''')==[]:
-                        # f'id FROM author WHERE id="{item[key]['id']}"')==[]:
-                            self.__insert(key,item[key].values())
+                            sqls.setdefault(key, [])
+                            sqls[key].append(self.__str(item[key].values()))
                         item[key] = 'DBdict'
-                self.__insert("articles",item.values())
+                sqls.setdefault('articles', [])
+                sqls['articles'].append(self.__str(item.values()))
+            self.__insert(sqls)
             if self.compareDay(data[-1]['updateTime'],firstDay):
                 break
-            self.post['page']+=1
+            self.post['page'] += 1
             self.post['lastId'] = data[-1]['aid']
     
     def sql(self,key):
@@ -196,7 +215,7 @@ class Article:
                 data.append(tuple(M.values()))
         except Exception as error:
             if EXCEL:
-                t=strftime('%H%M%S',localtime(time()))
+                t=strftime('%H',localtime(time()))
                 Yiban.excel(f"reply{t}.xlsx",data)
             else:
                 for item in data:print(item)
@@ -208,8 +227,8 @@ if __name__=='__main__':
     for line in lut.head:
         print(line)
         print(lut.head[line])
-    if input('确定获取数据(Y/N)')=='Y':lut.getArticles(firstDay='2019-09-01',size=200)
-    os.system("cls")
+    if input('确定获取数据(Y/N)')=='Y':lut.getArticles(firstDay='2019-09-01',size=500)
+    # os.system("cls")
     print('''
     # 关键词统计
         * FROM articles WHERE title LIKE "%易流技术%" OR content LIKE "%易流技术%" ORDER BY clicks*1 DESC
@@ -246,3 +265,5 @@ if __name__=='__main__':
 
     # 日期出界需人工校验
     # 多关键词 dict.setdefault
+    # 屏蔽帖
+    # status=1
