@@ -82,16 +82,15 @@ class Database:
 
 # 微社区
 class Forum:
-    def __init__(self,puid=5189448,DATABASE=True):
+    def __init__(self,puid=sys.argv[-1],DATABASE=True,recreate=True):
         self.post = dict(channel_id=55461, group_id=0, my=0, need_notice=0, 
         orderby='updateTime', page=1, puid=puid, Sections_id=-1)
         self.canWrite = False
         self.db = None
         if DATABASE:
-            if input('重建数据库？(Y/N)')=='Y':
-                self.canWrite=True
+            self.canWrite=recreate
             # 创建数据库
-            self.db = Database(recreate=self.canWrite)
+            self.db = Database(recreate=recreate)
         # 初始化 heads 数据
         self.__head()
     
@@ -125,6 +124,14 @@ class Forum:
         self.heads['data'] = tuple(data)
         self.__create("articles",data)
     
+    # SQL 查询
+    def sql(self,key):
+        try:
+            return self.db.select(key)
+        except:
+            print('输入错误！！！')
+            return []
+
     # 发帖日期比较
     def compareDay(self,update,start):
         year = strftime('%Y-',localtime(time()))
@@ -135,6 +142,7 @@ class Forum:
         print(update)
         return update < start
 
+    # 字符串去布尔值
     def __str(self,val):
         val = str(tuple(val))
         val = val.replace('None','\'None\'')
@@ -143,12 +151,15 @@ class Forum:
         # print(val)
         return val
 
+    # 插入数据封装
     def __insert(self,sqls):
         for sql in sqls:
             if self.db and self.canWrite:
-                self.db.insert(sql,sqls[sql])
+                self.db.insert(sql,set(sqls[sql]))
     
+    # 获取帖子内容
     def getArticles(self,firstDay=strftime('%Y-%m-%d',localtime(time())),size=20):
+        print(firstDay)
         while True:
             self.post['size'] = size
             data = self.__tmp
@@ -163,10 +174,12 @@ class Forum:
                             sqls[key].append(self.__str([item['id'],val]))
                         item[key] = 'DBlist'
                     else:
+                        # 存储子字典
                         if self.sql(f'''id FROM author WHERE id="{item[key]['id']}"''')==[]:
                             sqls.setdefault(key, [])
                             sqls[key].append(self.__str(item[key].values()))
                         item[key] = 'DBdict'
+                # 存储字典
                 sqls.setdefault('articles', [])
                 sqls['articles'].append(self.__str(item.values()))
             self.__insert(sqls)
@@ -174,13 +187,6 @@ class Forum:
                 break
             self.post['page'] += 1
             self.post['lastId'] = data[-1]['aid']
-    
-    def sql(self,key):
-        try:
-            return self.db.select(key)
-        except:
-            print('输入错误！！！')
-            return []
 
 # 话题
 class Article:
@@ -213,7 +219,7 @@ class Article:
                 data.append(tuple(M.values()))
         except Exception as error:
             if EXCEL:
-                t=strftime('%H',localtime(time()))
+                t=strftime('%H%M%S',localtime(time()))
                 Yiban.excel(f"reply{t}.xlsx",data)
             else:
                 for item in data:print(item)
@@ -221,45 +227,9 @@ class Article:
 
 
 if __name__=='__main__':
-    lut = Forum(5189448)
-    for line in lut.head:
-        print(line)
-        print(lut.head[line])
-    if input('确定获取数据(Y/N)')=='Y':lut.getArticles(firstDay='2019-09-01',size=500)
+    print('请使用edata')
+    exit()
     # os.system("cls")
-    print('''
-    # 关键词统计
-        * FROM articles WHERE title LIKE "%易流技术%" OR content LIKE "%易流技术%" ORDER BY clicks*1 DESC
-    # 点击量排行
-        * FROM articles ORDER BY clicks*1 DESC LIMIT 100
-    # 评论量排行
-        * FROM articles ORDER BY replyCount+0 DESC LIMIT 100
-    # 点赞量排行
-        * FROM articles ORDER BY upCount*1 DESC LIMIT 100
-    # 个人发帖情况
-        user_id,author.name,COUNT(user_id),SUM(clicks),SUM(upCount),SUM(replyCount) FROM articles,author WHERE author.id=user_id GROUP BY user_id ORDER BY COUNT(user_id) DESC
-
-    # 用户发帖
-        * FROM articles WHERE user_id="29171346" ORDER BY clicks*1 DESC
-    # 作者信息查询
-        DISTINCT * FROM author WHERE id="29171346"
-    # 帖子图片
-        * from IMAGES WHERE ID="90723390"
-    ''')
-    while True:
-        i=1
-        val=input("sql> ")
-        for line in lut.sql(val):
-            print(i,end='')
-            i+=1
-            for item in line:
-                print('$',item,end='')
-            print()
-
-    # article= Article()
-    # article.content
-    # article.replys(EXCEL=True)
-    # article.replys()
 
     # 日期出界需人工校验
     # 多关键词 dict.setdefault
