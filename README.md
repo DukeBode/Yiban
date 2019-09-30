@@ -1,6 +1,8 @@
 # 易班微社区统计
 
+
 ### 下载
+
 - 压缩包：
 
 https://github.com/DukeBode/yiban/archive/Python.zip
@@ -10,8 +12,53 @@ https://github.com/DukeBode/yiban/archive/Python.zip
 ```sh
 git clone -b Python https://github.com/DukeBode/yiban.git
 ```
-### 使用说明
-- 统计评论
+
+---
+
+### 功能使用说明
+
+请在 powershell 环境下输入以下命令
+> 在文件所在目录 按住 shift 键，并点击鼠标右键，选择 powershell 即可打开
+
+- 统计话题评论（单篇）
+
+```sh
+python edata.py replys 易班话题链接
+```
+
+- 话题内容（单篇）
+
+```sh
+python edata.py content 易班话题链接
+```
+
+- 查看微社区数据表头
+
+```sh
+python edata.py heads
+```
+
+- 获取微社区数据（请在查询数据之前执行）
+
+```sh
+python edata.py articles 开始年-月-日
+```
+
+执行以下操作前，请确认已执行获取微社区数据的操作
+
+- SQL 查询数据
+
+```sh
+python edata.py sql
+```
+
+- SQL 查询示例
+
+```sh
+python edata.py demo
+```
+
+
 
 ### 程序功能
 - [x] 通过标题关键词统计指定时间段内发过的帖子
@@ -29,11 +76,11 @@ git clone -b Python https://github.com/DukeBode/yiban.git
 | VScode | 编辑程序代码 | [https://code.visualstudio.com/](https://code.visualstudio.com/) |
 
 
-### 安装说明
+<!-- ### 安装说明 -->
 
-1. 确认程序环境以及网络连接正常
+<!-- 1. 确认程序环境以及网络连接正常
 1. 在[更新日志](#更新日志)中下载最新版
 1. 使用 7-zip（或其它压缩软件）解压安装包
 1. 首次使用，点击 install.bat 文件进行安装环境和部署程序
 1. 非首次使用，点击 reinstall.bat 文件直接进行部署程序
-1. 确认安装，如有红色字体，请重新安装
+1. 确认安装，如有红色字体，请重新安装 -->
