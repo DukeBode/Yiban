@@ -10,7 +10,7 @@ https://github.com/DukeBode/yiban/archive/Python.zip
 - git 命令：
 
 ```sh
-git clone -b Python https://github.com/DukeBode/yiban.git
+git clone -b Forum-Data https://github.com/DukeBode/Yiban.git
 ```
 
 ---
