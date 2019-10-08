@@ -5,7 +5,7 @@
 
 - 压缩包：
 
-https://github.com/DukeBode/yiban/archive/Python.zip
+https://github.com/DukeBode/Yiban/archive/Forum-Data.zip
 
 - git 命令：
 
