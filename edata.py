@@ -33,13 +33,11 @@ def sql():
         try:
             val = input('SQL > ')
             nth += 1
+            i = 0
         except KeyboardInterrupt:
             print('\n结束查询,程序退出。')
             exit()
-        data = school.sql(val)
-        if data != []:
-            Yiban.excel(f"Forum-data{nth}.xlsx",data)
-        i = 0
+        data = school.sql(val,nth,config.sql_xlsx)
         for line in data:   
             i+=1
             print(i,end='')
@@ -71,8 +69,8 @@ def demo():
         * from IMAGES WHERE ID="90723390"
     ''')
 # 清理非程序文件
-def clean():
-    pass
+def clean():Yiban.clean('xlsx')
+
 # 帮助字典
 help = {
     'replys':replys,

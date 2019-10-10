@@ -4,6 +4,13 @@ import openpyxl,sqlite3
 import requests
 
 class Yiban:
+    # 删除文件，参数名为后缀名
+    @classmethod
+    def clean(cls,format):
+        for file in os.listdir(os.getcwd()):
+            if file.endswith(f'.{format}'):
+                os.remove(file)
+                print(file)
 
     # excel格式存储
     # data 二维数据
@@ -125,12 +132,14 @@ class Forum:
         self.__create("articles",data)
     
     # SQL 查询
-    def sql(self,key):
+    def sql(self,key,nth,EXCEL=True):
         try:
-            return self.db.select(key)
+            data = self.db.select(key)
+            if not EXCEL:return data
+            Yiban.excel(f"Forum-data{nth}.xlsx",data)
         except:
             print('输入错误！！！')
-            return []
+        return []
 
     # 发帖日期比较
     def compareDay(self,update,start):

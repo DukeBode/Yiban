@@ -46,7 +46,7 @@ python edata.py articles 开始年-月-日
 
 执行以下操作前，请确认已执行获取微社区数据的操作
 
-- SQL 查询数据
+- SQL 查询数据(Ctrl + C 退出)
 
 ```sh
 python edata.py sql
@@ -58,6 +58,11 @@ python edata.py sql
 python edata.py demo
 ```
 
+- 清理所有 xlsx 文件
+
+```sh
+python edata.py clean
+```
 
 
 ### 程序功能
