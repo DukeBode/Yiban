@@ -197,7 +197,7 @@ class Article:
     @property
     def content(self):
         data=self.post
-        del data['group_id']
+        if 'groupid' in data:del data['group_id']
         data['origin']=0
         msg=Yiban.postUrl("http://www.yiban.cn/forum/article/showAjax",data)
         return msg.json()['data']
