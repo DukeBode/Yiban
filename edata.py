@@ -28,16 +28,21 @@ def articles():
 # SQL 查询
 def sql():
     school = Forum(config.puid,recreate=False)
+    nth = 0
     while True:
-        i=1
         try:
             val = input('SQL > ')
+            nth += 1
         except KeyboardInterrupt:
             print('\n结束查询,程序退出。')
             exit()
-        for line in school.sql(val):
-            print(i,end='')
+        data = school.sql(val)
+        if data != []:
+            Yiban.excel(f"Forum-data{nth}.xlsx",data)
+        i = 0
+        for line in data:   
             i+=1
+            print(i,end='')
             for item in line:
                 print('$',item,end='')
             print()
@@ -45,6 +50,8 @@ def sql():
 # SQL 查询示例
 def demo():
     print('''
+    24小时之前十月发帖
+        * FROM articles where createtime like "10-%" ORDER BY clicks*1 DESC
     # 关键词统计
         * FROM articles WHERE title LIKE "%易流技术%" OR content LIKE "%易流技术%" ORDER BY clicks*1 DESC
     # 点击量排行
@@ -63,6 +70,9 @@ def demo():
     # 帖子图片
         * from IMAGES WHERE ID="90723390"
     ''')
+# 清理非程序文件
+def clean():
+    pass
 # 帮助字典
 help = {
     'replys':replys,
@@ -70,7 +80,8 @@ help = {
     'heads':heads,
     'articles':articles,
     'sql':sql,
-    'demo':demo
+    'demo':demo,
+    'clean':clean
 }
 
 if __name__=='__main__':
