@@ -1,4 +1,5 @@
 import sys
+from time import strftime,localtime,time
 from yiban import *
 import config
 
@@ -28,16 +29,17 @@ def articles():
 # SQL 查询
 def sql():
     school = Forum(config.puid,recreate=False)
+    now = strftime('%H-%M-%S',localtime(time()))
     nth = 0
     while True:
         try:
-            val = input('SQL > ')
             nth += 1
+            val = input(f'{now} SQL {nth}> ')
             i = 0
         except KeyboardInterrupt:
             print('\n结束查询,程序退出。')
             exit()
-        data = school.sql(val,nth,config.sql_xlsx)
+        data = school.sql(val,f'-{now}-{nth}',config.sql_xlsx)
         for line in data:   
             i+=1
             print(i,end='')

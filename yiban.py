@@ -55,7 +55,6 @@ class Yiban:
 class Database:
     def __init__(self,filename='yiban',recreate=True):
         t=strftime('%d',localtime(time()))
-        # t=datetime.datetime.now().strftime("%H%M%S")
         self.db_name=f"{filename}{t}.db"
         if os.path.isfile(self.db_name) and recreate==True:
             os.remove(self.db_name)
@@ -132,7 +131,7 @@ class Forum:
         self.__create("articles",data)
     
     # SQL 查询
-    def sql(self,key,nth,EXCEL=True):
+    def sql(self,key,nth=None,EXCEL=False):
         try:
             data = self.db.select(key)
             if not EXCEL:return data

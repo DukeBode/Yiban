@@ -5,5 +5,5 @@ size=500
 # 启用 Excel 保存评论
 xlsx=True
 # 启用 Excel 保存查询数据
-sql_xlsx=False
+sql_xlsx=True
 
