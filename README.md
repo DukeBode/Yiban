@@ -72,7 +72,7 @@ python edata.py heads
 python edata.py articles 开始年-月-日
 ```
 
-执行以下操作前，请确认已执行获取微社区数据的操作
+提醒：执行 SQL 操作前，请确认已执行获取微社区数据的操作
 
 - SQL 查询数据(Ctrl + C 退出)
 
