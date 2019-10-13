@@ -1,9 +1,12 @@
 # 校方 ID
 puid=5189448
+
 # 每次获取数量
 size=500
+
 # 启用 Excel 保存评论
 xlsx=True
+
 # 启用 Excel 保存查询数据
 sql_xlsx=True
 
@@ -28,3 +31,12 @@ count_item={
     '新能源学院':['新韵能源'],
     '软件学院':['慎微软件'],
 }
+
+# 启用内容关键词检索
+content=False
+
+# 保存各归属方数据（未实现）
+# data=True
+
+# 屏蔽帖（未实现）
+# status=1

@@ -76,12 +76,18 @@ def clean():Yiban.clean('xlsx')
 def count():
     school = Forum(config.puid,recreate=False)
     values = config.count_item
-    for val in values:
-        print(val,end='')
-        for val in values[val]:
-            sql = f'count(*) from articles where title like "%{val}%"'
-            data=school.sql(sql)[0][0]
-            print(data)
+    data=[('归属方','发帖数量')]
+    for item in values:
+        num = 0
+        for val in values[item]:
+            if config.content:
+                sql = f'count(*) FROM articles WHERE title LIKE "%{val}%" OR content LIKE "%{val}%"'
+            else:
+                sql = f'count(*) from articles where title like "%{val}%"'
+            num += school.sql(sql)[0][0]
+        data.append((item,num))
+    if data is not []:
+        Yiban.excel(strftime('count-%H-%M-%S.xlsx',localtime(time())),data)
 
 # 帮助字典
 help = {
