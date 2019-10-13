@@ -35,7 +35,7 @@ powershell -ExecutionPolicy bypass -File install.ps1
 - 含虚拟环境安装（保证环境依赖不冲突，但每次下载后都需重建环境。）
 
 ```
-powershell -ExecutionPolicy bypass -File install.ps1
+powershell -ExecutionPolicy bypass -File install_env.ps1
 ```
 
 ### 功能使用说明
