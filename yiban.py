@@ -237,7 +237,6 @@ class Article:
 if __name__=='__main__':
     print('请使用edata')
     exit()
-    # os.system("cls")
 
     # 日期出界需人工校验
     # 多关键词 dict.setdefault

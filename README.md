@@ -1,24 +1,52 @@
 # 易班微社区统计
 
+### 说明
+
+1. 以下操作全程用网，请确保网络连接正常，网络质量稳定。
+1. 如遇异常，请确认非网络问题后，截图留言。
 
 ### 下载
 
-- 压缩包：
+- 压缩包（下载后一定要先解压）：
 
 https://github.com/DukeBode/Yiban/archive/Forum-Data.zip
 
-- git 命令：
+- git 命令（需要有 git 环境）：
 
 ```sh
 git clone -b Forum-Data https://github.com/DukeBode/Yiban.git
 ```
 
 ---
+### 环境安装说明
+
+请安装好 Python 3 后，在 powershell 环境下输入以下命令
+
+> 在文件所在目录 按住 shift 键，并点击鼠标右键，选择 powershell 即可打开
+
+以下两种安装方式二选一即可
+
+- 最简安装（一般情况首次执行即可）
+
+```sh
+powershell -ExecutionPolicy bypass -File install.ps1
+```
+
+- 含虚拟环境安装（保证环境依赖不冲突，但每次下载后都需重建环境。）
+
+```
+powershell -ExecutionPolicy bypass -File install.ps1
+```
 
 ### 功能使用说明
 
 请在 powershell 环境下输入以下命令
-> 在文件所在目录 按住 shift 键，并点击鼠标右键，选择 powershell 即可打开
+
+- 激活环境（虚拟环境用户每次必须执行）
+```sh
+Set-ExecutionPolicy Bypass -Scope Process;.\venv\Scripts\activate
+# 如有提示请选 Y
+```
 
 - 统计话题评论（单篇）
 
@@ -64,15 +92,12 @@ python edata.py demo
 python edata.py clean
 ```
 
+- 退出（虚拟环境用户每次必须执行）
+```sh
+deactivate;exit
+```
 
-### 程序功能
-- [x] 通过标题关键词统计指定时间段内发过的帖子
-- [x] 通过标题关键词数组统计相关主题发帖量
-- [x] 获取点击量、回复量、点赞排行
-- [x] 获取个人发帖的发帖量、点击量、点赞量、评论量
-- [x] 统计评论信息
-
-### 程序环境
+### 相关软件
 | 软件名 | 功能 | 链接 |
 | :---: | :---: | :---: |
 | Windows10 | 提供 bat 脚本环境 | [https://www.microsoft.com/zh-cn/software-download/windows10](https://www.microsoft.com/zh-cn/software-download/windows10) |
@@ -80,12 +105,3 @@ python edata.py clean
 | Python3 | 运行本 Python 程序 | [https://www.python.org/](https://www.python.org/) |
 | VScode | 编辑程序代码 | [https://code.visualstudio.com/](https://code.visualstudio.com/) |
 
-
-<!-- ### 安装说明 -->
-
-<!-- 1. 确认程序环境以及网络连接正常
-1. 在[更新日志](#更新日志)中下载最新版
-1. 使用 7-zip（或其它压缩软件）解压安装包
-1. 首次使用，点击 install.bat 文件进行安装环境和部署程序
-1. 非首次使用，点击 reinstall.bat 文件直接进行部署程序
-1. 确认安装，如有红色字体，请重新安装 -->
