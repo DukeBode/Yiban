@@ -40,6 +40,8 @@ powershell -ExecutionPolicy bypass -File install_env.ps1
 
 ### 功能使用说明
 
+提醒：使用之前请使用贵校定制的 config.py 覆盖系统自带的 config.py 文件
+
 请在 powershell 环境下输入以下命令
 
 - 激活环境（虚拟环境用户每次必须执行）
@@ -78,6 +80,12 @@ python edata.py articles 开始年-月-日
 
 ```sh
 python edata.py sql
+```
+
+- SQL 查询各归属方发帖数量
+
+```sh
+python edata.py count
 ```
 
 - SQL 查询示例
