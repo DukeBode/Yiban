@@ -18,7 +18,7 @@ git clone -b Forum-Data https://github.com/DukeBode/Yiban.git
 ```
 
 ---
-### 环境安装说明
+### 环境安装说明（选读）
 
 请安装好 Python 3 后，在 powershell 环境下输入以下命令
 
