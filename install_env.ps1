@@ -5,7 +5,7 @@ pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
 python -m venv venv
 
 .\venv\Scripts\activate
-pip install-r requirements.txt
+pip install -r requirements.txt
 deactivate
 
 attrib +h requirements.txt
