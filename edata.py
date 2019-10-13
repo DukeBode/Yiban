@@ -73,6 +73,16 @@ def demo():
 # 清理非程序文件
 def clean():Yiban.clean('xlsx')
 
+def count():
+    school = Forum(config.puid,recreate=False)
+    values = config.count_item
+    for val in values:
+        print(val,end='')
+        for val in values[val]:
+            sql = f'count(*) from articles where title like "%{val}%"'
+            data=school.sql(sql)[0][0]
+            print(data)
+
 # 帮助字典
 help = {
     'replys':replys,
@@ -80,6 +90,7 @@ help = {
     'heads':heads,
     'articles':articles,
     'sql':sql,
+    'count':count,
     'demo':demo,
     'clean':clean
 }
