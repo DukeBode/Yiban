@@ -15,7 +15,7 @@ def content():
 
 # 获取微社区表头
 def heads():
-    school = Forum(config.puid,recreate=False)
+    school = Forum(config.channel_id,config.puid,config.group_id,recreate=False)
     head=school.head
     for line in head:
         print(line,':')
@@ -23,12 +23,12 @@ def heads():
 
 # 获取微社区数据
 def articles():
-    school = Forum(config.puid)
+    school = Forum(config.channel_id,config.puid,config.group_id)
     school.getArticles(sys.argv[-1],size=config.size)
 
 # SQL 查询
 def sql():
-    school = Forum(config.puid,recreate=False)
+    school = Forum(config.channel_id,config.puid,config.group_id,recreate=False)
     now = strftime('%H-%M-%S',localtime(time()))
     nth = 0
     while True:
@@ -74,7 +74,7 @@ def demo():
 def clean():Yiban.clean('xlsx')
 
 def count():
-    school = Forum(config.puid,recreate=False)
+    school = Forum(config.channel_id,config.puid,config.group_id,recreate=False)
     values = config.count_item
     data=[('归属方','发帖数量')]
     for item in values:

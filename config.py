@@ -1,5 +1,10 @@
-# 校方 ID
-puid=5189448
+# 微社区 信息
+channel_id=234924
+puid=8465441
+group_id=402076
+# channel_id=55461
+# puid=5189448
+# group_id=0
 
 # 每次获取数量
 size=500

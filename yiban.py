@@ -88,8 +88,8 @@ class Database:
 
 # 微社区
 class Forum:
-    def __init__(self,puid=sys.argv[-1],DATABASE=True,recreate=True):
-        self.post = dict(channel_id=55461, group_id=0, my=0, need_notice=0, 
+    def __init__(self,channel_id=sys.argv[-2],puid=sys.argv[-1],group_id=0,DATABASE=True,recreate=True):
+        self.post = dict(channel_id=channel_id, group_id=group_id, my=0, need_notice=0, 
         orderby='updateTime', page=1, puid=puid, Sections_id=-1)
         self.canWrite = False
         self.db = None
