@@ -40,7 +40,7 @@ powershell -ExecutionPolicy bypass -File install_env.ps1
 
 ### 功能使用说明
 
-提醒：使用之前请使用贵校定制的 config.py 覆盖系统自带的 config.py 文件
+提醒：使用之前请使用贵微社区定制的 config.py 覆盖系统自带的 config.py 文件
 
 请在 powershell 环境下输入以下命令
 
