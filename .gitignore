@@ -1,0 +1,19 @@
+# Project
+
+node_modules/
+
+# Python
+__pycache__/
+migrations/
+venv/
+
+# Django
+db.sqlite3
+db.sqlite3-journal
+
+package.json
+nginx.conf
+uwsgi.ini
+yarn.lock
+--ini
+Django/static/
