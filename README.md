@@ -24,18 +24,10 @@ git clone -b Forum-Data https://github.com/DukeBode/Yiban.git
 
 > 在文件所在目录 按住 shift 键，并点击鼠标右键，选择 powershell 即可打开
 
-以下两种安装方式二选一即可
-
 - 最简安装（一般情况首次执行即可）
 
 ```sh
 powershell -ExecutionPolicy bypass -File install.ps1
-```
-
-- 含虚拟环境安装（保证环境依赖不冲突，但每次下载后都需重建环境。）
-
-```
-powershell -ExecutionPolicy bypass -File install_env.ps1
 ```
 
 ### 功能使用说明
@@ -43,12 +35,6 @@ powershell -ExecutionPolicy bypass -File install_env.ps1
 提醒：使用之前请使用贵微社区定制的 config.py 覆盖系统自带的 config.py 文件
 
 请在 powershell 环境下输入以下命令
-
-- 激活环境（虚拟环境用户每次必须执行）
-```sh
-Set-ExecutionPolicy Bypass -Scope Process;.\venv\Scripts\activate
-# 如有提示请选 Y
-```
 
 - 统计话题评论（单篇）
 
@@ -98,11 +84,6 @@ python edata.py demo
 
 ```sh
 python edata.py clean
-```
-
-- 退出（虚拟环境用户每次必须执行）
-```sh
-deactivate;exit
 ```
 
 ### 相关软件
