@@ -1,10 +1,5 @@
-# 微社区 信息
-channel_id=234924
-puid=8465441
-group_id=402076
-# channel_id=55461
-# puid=5189448
-# group_id=0
+# 微社区网址
+forum='http://www.yiban.cn/Org/orglistShow/puid/18396296/group_id/411965/type/forum'
 
 # 每次获取数量
 size=500
@@ -15,7 +10,7 @@ xlsx=True
 # 启用 Excel 保存查询数据
 sql_xlsx=True
 
-# 需计数关键词,
+# 需计数关键词,同一归属方的关键词数会叠加
 # 格式 '归属方'：['查找关键词1','查找关键词n',],
 count_item={
     '易班技术部':['易流技术','易流'],

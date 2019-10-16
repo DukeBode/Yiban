@@ -88,9 +88,9 @@ class Database:
 
 # 微社区
 class Forum:
-    def __init__(self,channel_id=sys.argv[-2],puid=sys.argv[-1],group_id=0,DATABASE=True,recreate=True):
-        self.post = dict(channel_id=channel_id, group_id=group_id, my=0, need_notice=0, 
-        orderby='updateTime', page=1, puid=puid, Sections_id=-1)
+    # def __init__(self,channel_id=sys.argv[-2],puid=sys.argv[-1],group_id=0,DATABASE=True,recreate=True):
+    def __init__(self,forum,DATABASE=True,recreate=True):
+        self.config(forum)     
         self.canWrite = False
         self.db = None
         if DATABASE:
@@ -100,9 +100,25 @@ class Forum:
         # 初始化 heads 数据
         self.__head()
     
+    def config(self,forum):
+        post_data=Yiban.param(forum)
+        if 'group_id' not in post_data:post_data['group_id']=0
+        data = Yiban.postUrl('http://www.yiban.cn/forum/api/getListAjax',post_data)
+        post_data['channel_id'] = data.json()['data']['channel_id']
+        self.post = dict(
+            channel_id=post_data['channel_id'], 
+            group_id=post_data['group_id'], 
+            my=0, 
+            need_notice=0, 
+            orderby='updateTime', 
+            page=1, 
+            puid=post_data['puid'], 
+            Sections_id=-1
+        )
+
     @property
-    def head(self):
-        return self.heads
+    def head(self):return self.heads
+
     @property
     def __tmp(self):
         data=Yiban.postUrl('https://www.yiban.cn/forum/article/listAjax', self.post)
