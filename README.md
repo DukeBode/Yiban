@@ -2,6 +2,7 @@
 
 ### 说明
 
+1. 本程序在 Window 10 & Python 3.7 环境开发，未对其它环境测试。
 1. 以下操作全程用网，请确保网络连接正常，网络质量稳定。
 1. 如遇异常，请确认非网络问题后，截图留言。
 
@@ -18,23 +19,13 @@ git clone -b Forum-Data https://github.com/DukeBode/Yiban.git
 ```
 
 ---
-### 环境安装说明（选读）
-
-请安装好 Python 3 后，在 powershell 环境下输入以下命令
-
-> 在文件所在目录 按住 shift 键，并点击鼠标右键，选择 powershell 即可打开
-
-- 最简安装（一般情况首次执行即可）
-
-```sh
-powershell -ExecutionPolicy bypass -File install.ps1
-```
 
 ### 功能使用说明
 
 提醒：使用之前请使用贵微社区定制的 config.py 覆盖系统自带的 config.py 文件
 
-请在 powershell 环境下输入以下命令
+请确认安装好 Python 3 后，请在 powershell 
+> 在文件所在目录 按住 shift 键，并点击鼠标右键，选择 powershell 即可打开
 
 - 统计话题评论（单篇）
 

@@ -1,7 +1,13 @@
+import importlib.util as imp
 import sys,os,re
+
+os.system('pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple')
+for item in ['openpyxl','requests']:
+    if imp.find_spec(item) is None:
+        os.system(f'pip install {item}')
+
 from time import strftime,localtime,time,strptime,mktime
-import openpyxl,sqlite3
-import requests
+import requests, openpyxl, sqlite3
 
 class Yiban:
     # 删除文件，参数名为后缀名
