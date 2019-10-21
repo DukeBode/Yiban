@@ -1,5 +1,5 @@
 from urllib import request, parse
-from . import config
+from django.conf.settings import YIBAN_CONFIG as config
 import json
 
 class Yiban:
