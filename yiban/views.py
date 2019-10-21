@@ -14,8 +14,7 @@ def back(request):
     # print(request.GET.keys()) 
     response = HttpResponse('正在维护 <a class="nav-link" href="/">返回首页</a>')
     if 'code' in request.GET:
-        oauth=Oauth()
-        data = oauth.get_access_token(request.GET["code"])
+        data = Yiban.get_access_token(request.GET["code"])
         if 'userid' in data:
             user = User.objects.get_or_create(userid=data['userid'])[0]
             user.access_token = data['access_token']
@@ -36,8 +35,8 @@ def back(request):
                 ''')
             user.save()
             
-            # user = auth.authenticate(userid=data['userid'])
-            auth.login(request,user)
+            # user = Yiban.authenticate(userid=data['userid'])
+            Yiban.authorize(request,user)
             # request.session['access_token']=p['access_token']
             # request.session['userid']=p['userid']
             # print(Yiban.letter(data['access_token'],data['access_token']))
@@ -62,8 +61,8 @@ def demo(request):
     })
 
 def login(request):
-    return redirect(Yiban.login())
+    return redirect(Yiban.authorize())
 
 def logout(request):
-    auth.logout(request)
+    Yiban.logout(request)
     return redirect('/')

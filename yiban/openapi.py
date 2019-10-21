@@ -1,6 +1,7 @@
 from urllib import request, parse
-from django.conf.settings import YIBAN_APP_CONFIG as config
+from django.conf import settings
 import json
+config = settings.YIBAN_APP_CONFIG
 
 class Yiban:
     @classmethod
@@ -22,9 +23,9 @@ class Yiban:
     def authorize(cls):
         url = 'https://openapi.yiban.cn/oauth/authorize'
         params = parse.urlencode({
-            'client_id': config.client_id,
-            'redirect_uri': config.redirect_uri,
-            'state': config.state
+            'client_id': config['client_id'],
+            'redirect_uri': config['redirect_uri'],
+            'state': config['state']
         })
         return f'{url}?{params}'
     
@@ -33,10 +34,10 @@ class Yiban:
     def get_access_token(cls, code):
         return cls.POST(
             'https://openapi.yiban.cn/oauth/access_token',{
-                'client_id': config.client_id,
-                'client_secret': config.client_secret,
+                'client_id': config['client_id'],
+                'client_secret': config['client_secret'],
                 'code': code,
-                'redirect_uri': config.redirect_uri,
+                'redirect_uri': config['redirect_uri'],
         })
     
     @classmethod
@@ -44,7 +45,7 @@ class Yiban:
     def check_token_info(cls, access_token, yb_uid):
         return cls.POST(
             'https://openapi.yiban.cn/oauth/token_info',{
-                'client_id': config.client_id,
+                'client_id': config['client_id'],
                 'access_token':access_token,
                 'yb_uid':yb_uid,
         })
@@ -54,7 +55,7 @@ class Yiban:
     def revoke_token(cls, access_token):
         return cls.POST(
             'https://openapi.yiban.cn/oauth/revoke_token',{
-                'client_id': config.client_id,
+                'client_id': config['client_id'],
                 'access_token':access_token,
         })
     
@@ -63,9 +64,9 @@ class Yiban:
     def reset_token(cls, access_token):
         return cls.POST(
             'https://openapi.yiban.cn/oauth/reset_token',{
-                'client_id': config.client_id,
-                'client_secret': config.client_secret,
-                'dev_uid': config.dev_uid
+                'client_id': config['client_id'],
+                'client_secret': config['client_secret'],
+                'dev_uid': config['dev_uid']
         })
     
 #
