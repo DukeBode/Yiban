@@ -19,7 +19,7 @@ class Yiban:
 
     @classmethod
     # GET重定向授权页面
-    def login(cls):
+    def authorize(cls):
         url = 'https://openapi.yiban.cn/oauth/authorize'
         params = parse.urlencode({
             'client_id': config.client_id,
@@ -27,7 +27,47 @@ class Yiban:
             'state': config.state
         })
         return f'{url}?{params}'
-
+    
+    @classmethod
+    # 获取已授权用户的access_token。
+    def get_access_token(cls, code):
+        return cls.POST(
+            'https://openapi.yiban.cn/oauth/access_token',{
+                'client_id': config.client_id,
+                'client_secret': config.client_secret,
+                'code': code,
+                'redirect_uri': config.redirect_uri,
+        })
+    
+    @classmethod
+    # 校验用户是否授权，如已授权状态expire_in值为0，则该授权凭证已过期，需要重新授权。
+    def check_token_info(cls, access_token, yb_uid):
+        return cls.POST(
+            'https://openapi.yiban.cn/oauth/token_info',{
+                'client_id': config.client_id,
+                'access_token':access_token,
+                'yb_uid':yb_uid,
+        })
+    
+    @classmethod
+    # 开发者主动取消指定用户的授权。
+    def revoke_token(cls, access_token):
+        return cls.POST(
+            'https://openapi.yiban.cn/oauth/revoke_token',{
+                'client_id': config.client_id,
+                'access_token':access_token,
+        })
+    
+    @classmethod
+    # 重置开发者在其所创建应用中的有效授权。
+    def reset_token(cls, access_token):
+        return cls.POST(
+            'https://openapi.yiban.cn/oauth/reset_token',{
+                'client_id': config.client_id,
+                'client_secret': config.client_secret,
+                'dev_uid': config.dev_uid
+        })
+    
 #
 
     @classmethod
@@ -92,14 +132,12 @@ class Yiban:
     @classmethod
     # 向指定用户发送易班站内信应用提醒。
     def letter(cls,access_token,to_yb_uid,content='hello',template='system'):
-        url = 'https://openapi.yiban.cn/msg/letter'
-        params = {
+        return cls.POST('https://openapi.yiban.cn/msg/letter',{
             'access_token': access_token,
             'to_yb_uid': to_yb_uid,
             'content': content,
             # 'template': template,
-        }
-        return cls.POST(url,params)
+        })
 
 # 资讯服务接口
 
@@ -126,50 +164,3 @@ class Yiban:
                 'days': days,
         })
 
-class Oauth:
-    def __init__(self):
-        self.client_id = config.client_id
-        self.client_secret = config.client_secret
-        self.redirect_uri = config.redirect_uri
-        self.state = config.state
-        self.dev_uid = config.dev_uid
-
-    # 获取已授权用户的access_token。
-    def get_access_token(self, code):
-        return Yiban.POST(
-            'https://openapi.yiban.cn/oauth/access_token',{
-                'client_id': self.client_id,
-                'client_secret': self.client_secret,
-                'code': code,
-                'redirect_uri': self.redirect_uri,
-            })
-    
-    # 校验用户是否授权，如已授权状态expire_in值为0，则该授权凭证已过期，需要重新授权。
-    def check_token_info(self, access_token, yb_uid):
-        url = 'https://openapi.yiban.cn/oauth/token_info'
-        params = {
-            'client_id': self.client_id,
-            'access_token':access_token,
-            'yb_uid':yb_uid,
-        }
-        return Yiban.POST(url,params)
-    
-    # 开发者主动取消指定用户的授权。
-    def revoke_token(self, access_token):
-        url = 'https://openapi.yiban.cn/oauth/revoke_token'
-        params = {
-            'client_id': self.client_id,
-            'access_token':access_token,
-        }
-        return Yiban.POST(url,params)
-    
-    # 重置开发者在其所创建应用中的有效授权。
-    def reset_token(self, access_token):
-        url = 'https://openapi.yiban.cn/oauth/reset_token'
-        params = {
-            'client_id': self.client_id,
-            'client_secret': self.client_secret,
-            'dev_uid': self.dev_uid
-        }
-        return Yiban.POST(url,params)
-       
