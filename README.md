@@ -1,10 +1,10 @@
 # Django Demo
 
-- 添加 app
+<!-- - 添加 app
 
 ```sh
 git clone -b Django-OAuth https://github.com/DukeBode/Yiban.git yiban
-```
+``` -->
 - 配置文件
 
 setting.py

@@ -1,8 +1,10 @@
+from urllib import request, parse
 # import requests
 # import time
 # from xml.etree import ElementTree as ET
 
-# class MediaPlatform:
+class MediaPlatform:
+    pass
 #     def __init__(self, host):
 #         self.BASE_URL = 'http://mp.yiban.cn/'
 #         self.payload = dict(
