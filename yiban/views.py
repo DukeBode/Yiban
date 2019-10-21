@@ -3,7 +3,7 @@ from django.shortcuts import render,redirect
 # Create your views here.
 from django.http import HttpResponse
 from django.contrib import auth
-from .open import Oauth,Yiban
+from .openapi import Yiban
 from .models import User
 
 def back(request):
