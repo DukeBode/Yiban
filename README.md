@@ -20,6 +20,8 @@ git clone -b Forum-Data https://github.com/DukeBode/Yiban.git
 
 ---
 
+![run first](https://github.com/DukeBode/Yiban/raw/Forum-Data/run_first.gif)
+
 ### 功能使用说明
 
 提醒：使用之前请使用贵微社区定制的 config.py 覆盖系统自带的 config.py 文件
