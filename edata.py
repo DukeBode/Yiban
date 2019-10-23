@@ -1,7 +1,5 @@
-import sys
-from time import strftime,localtime,time
+import sys,config
 from yiban import *
-import config
 
 # 话题评论
 def replys():
@@ -28,7 +26,7 @@ def articles():
 # SQL 查询
 def sql():
     school = Forum(config.forum,recreate=False)
-    now = strftime('%H-%M-%S',localtime(time()))
+    now = school.sql("time('now', 'localtime')")[0][0].replace(':','-')
     nth = 0
     while True:
         try:
@@ -49,6 +47,8 @@ def sql():
 # SQL 查询示例
 def demo():
     print('''
+    查询所有发帖及作者信息
+        articles.*,author.* from articles,author where articles.user_id=author.id  
     24小时之前十月发帖
         * FROM articles where createtime GLOB "10-*" ORDER BY clicks*1 DESC
     # 关键词统计
@@ -86,7 +86,8 @@ def count():
             num += school.sql(sql)[0][0]
         data.append((item,num))
     if data is not []:
-        Yiban.excel(strftime('count-%H-%M-%S.xlsx',localtime(time())),data)
+        now = school.sql("time('now', 'localtime')")[0][0].replace(':','-')
+        Yiban.excel(f'count-{now}.xlsx',data)
 
 # 帮助字典
 help = {
