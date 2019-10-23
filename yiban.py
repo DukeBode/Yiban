@@ -5,7 +5,7 @@ for item in ['openpyxl','requests']:
     if imp.find_spec(item) is None:
         os.system(f'pip install -i https://pypi.tuna.tsinghua.edu.cn/simple {item}')
 
-from time import strftime,localtime,time,strptime,mktime
+from time import strftime,localtime,time
 import requests, openpyxl, sqlite3
 
 class Yiban:
