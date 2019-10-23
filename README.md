@@ -73,7 +73,8 @@ python edata.py count
 python edata.py demo
 ```
 
-- 清理所有 xlsx 文件
+- 清理当前目录下所有的要删除的文件类型
+> 要删除的文件类型由 config.py 文件中的 del_file 指定
 
 ```sh
 python edata.py clean
