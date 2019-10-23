@@ -103,9 +103,9 @@ help = {
 if __name__=='__main__':
     param = sys.argv
     param = param[1] if len(param)>1 else ''
-    val = param.lower()
-    if val in help:
-        help.get(val)()
-    else:
+    try:
+        help.get(param.lower())()
+    except TypeError:
         print('参数',param,'不存在！！！')
         print('可用参数：',tuple(help.keys()))
+        
