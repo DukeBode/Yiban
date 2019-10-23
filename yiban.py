@@ -122,9 +122,6 @@ class Forum:
         )
 
     @property
-    def head(self):return self.heads
-
-    @property
     def __tmp(self):
         data=Yiban.postUrl('https://www.yiban.cn/forum/article/listAjax', self.post)
         return data.json()['data']['list']

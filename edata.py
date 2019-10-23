@@ -16,10 +16,9 @@ def content():
 # 获取微社区表头
 def heads():
     school = Forum(config.forum,recreate=False)
-    head=school.head
+    head=school.sql('sql from sqlite_master')
     for line in head:
-        print(line,':')
-        print('    ',head[line])
+        print(line[0].replace('CREATE TABLE ','\n表：').replace('(','\n列：('))
 
 # 获取微社区数据
 def articles():
@@ -51,9 +50,9 @@ def sql():
 def demo():
     print('''
     24小时之前十月发帖
-        * FROM articles where createtime like "10-%" ORDER BY clicks*1 DESC
+        * FROM articles where createtime GLOB "10-*" ORDER BY clicks*1 DESC
     # 关键词统计
-        * FROM articles WHERE title LIKE "%易流技术%" OR content LIKE "%易流技术%" ORDER BY clicks*1 DESC
+        * FROM articles WHERE title GLOB "*易流技术*" OR content GLOB "*易流技术*" ORDER BY clicks*1 DESC
     # 点击量排行
         * FROM articles ORDER BY clicks*1 DESC LIMIT 100
     # 评论量排行
@@ -81,9 +80,9 @@ def count():
         num = 0
         for val in values[item]:
             if config.content:
-                sql = f'count(*) FROM articles WHERE title LIKE "%{val}%" OR content LIKE "%{val}%"'
+                sql = f'count(*) FROM articles WHERE title GLOB "*{val}*" OR content GLOB "*{val}*"'
             else:
-                sql = f'count(*) from articles where title like "%{val}%"'
+                sql = f'count(*) from articles where title GLOB "*{val}*"'
             num += school.sql(sql)[0][0]
         data.append((item,num))
     if data is not []:
@@ -102,11 +101,11 @@ help = {
 }
 
 if __name__=='__main__':
-    val = sys.argv
-    val = val[1] if len(val)>1 else ''
+    param = sys.argv
+    param = param[1] if len(param)>1 else ''
+    val = param.lower()
     if val in help:
-        data = help.get(val)
-        data()
+        help.get(val)()
     else:
-        print('参数',val,'不存在！！！')
+        print('参数',param,'不存在！！！')
         print('可用参数：',tuple(help.keys()))
