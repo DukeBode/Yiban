@@ -9,13 +9,20 @@ from time import strftime,localtime,time
 import requests, openpyxl, sqlite3
 
 class Yiban:
+    @classmethod
+    def filename(cls,name):
+        symbols=tuple('\/:*?"<>|')
+        for symbol in symbols:
+            name = name.replace(symbol,'')
+        return name
+    
     # 删除文件，参数名为后缀名
     @classmethod
     def clean(cls,*format):
         for file in os.listdir(os.getcwd()):
             if file[file.rfind('.')+1:] in format:
                 os.remove(file)
-                print(file)
+                print(f'已删除文件 {file}')
 
     # excel格式存储
     # data 二维数据
@@ -29,6 +36,12 @@ class Yiban:
             print(item)
             ws.append(item)
             wb.save(filename)
+
+    @classmethod
+    def filesave(cls,title,content):
+        f = open(f"{cls.filename(title)}.html", "w")
+        f.write(content)
+        f.close()
 
     # post 获取数据
     @classmethod

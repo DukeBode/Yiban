@@ -9,7 +9,10 @@ def replys():
 # 话题内容
 def content():
     article= Article()
-    print(article.content['article']['content'])
+    title = article.content['article']['title']
+    id = article.content['article']['id']
+    Yiban.filesave(f'{id}{title}',article.content['article']['content'])
+    print(f'请在当前目录，点击 {id}{title}.html 文件阅读内容。')
 
 # 获取微社区表头
 def heads():
