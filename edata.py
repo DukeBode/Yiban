@@ -70,7 +70,7 @@ def demo():
         * from IMAGES WHERE ID="90723390"
     ''')
 # 清理非程序文件
-def clean():Yiban.clean('xlsx')
+def clean():Yiban.clean(*config.del_file)
 
 def count():
     school = Forum(config.forum,recreate=False)

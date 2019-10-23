@@ -11,9 +11,9 @@ import requests, openpyxl, sqlite3
 class Yiban:
     # 删除文件，参数名为后缀名
     @classmethod
-    def clean(cls,format):
+    def clean(cls,*format):
         for file in os.listdir(os.getcwd()):
-            if file.endswith(f'.{format}'):
+            if file[file.rfind('.')+1:] in format:
                 os.remove(file)
                 print(file)
 
@@ -255,7 +255,3 @@ class Article:
 if __name__=='__main__':
     print('请使用edata')
     exit()
-
-    # 日期出界需人工校验
-    # 多关键词 dict.setdefault
-   

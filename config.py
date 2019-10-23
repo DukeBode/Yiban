@@ -4,6 +4,9 @@ forum='http://www.yiban.cn/Org/orglistShow/puid/18396296/group_id/411965/type/fo
 # 每次获取数量
 size=500
 
+# 批删除的文件后缀
+del_file='xlsx','要删除的文件后缀'
+
 # 启用 Excel 保存评论
 xlsx=True
 
