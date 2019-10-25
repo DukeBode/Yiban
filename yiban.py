@@ -182,15 +182,12 @@ class Forum:
     def compareDay(self,update,start):
         year = strftime('%Y-',localtime(time()))
         update = year+update[:5] if update[2]=='-' else update[:10]
+        print(update)
         return update < start
 
     # 字符串去布尔值
-    def __str(self,val):
-        val = str(tuple(val))
-        val = val.replace('None','\'None\'')
-        val = val.replace('True','\'True\'')
-        val = val.replace('False','\'False\'')
-        return val
+    def replace(self,val):
+        return re.sub(r'([a-zA-Z]+),','\'\\1\',',str(tuple(val)))
 
     # 插入数据封装
     def __insert(self,sqls):
@@ -212,17 +209,17 @@ class Forum:
                         # 存储子数组
                         for val in item[key]:
                             sqls.setdefault(key, [])
-                            sqls[key].append(self.__str([item['id'],val]))
+                            sqls[key].append(self.replace([item['id'],val]))
                         item[key] = 'DBlist'
                     else:
                         # 存储子字典
                         if self.sql(f'''id FROM author WHERE id="{item[key]['id']}"''')==[]:
                             sqls.setdefault(key, [])
-                            sqls[key].append(self.__str(item[key].values()))
+                            sqls[key].append(self.replace(item[key].values()))
                         item[key] = 'DBdict'
                 # 存储字典
                 sqls.setdefault('articles', [])
-                sqls['articles'].append(self.__str(item.values()))
+                sqls['articles'].append(self.replace(item.values()))
             self.__insert(sqls)
             if self.compareDay(data[-1]['updateTime'],firstDay):
                 break
