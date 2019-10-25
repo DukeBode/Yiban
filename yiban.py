@@ -106,7 +106,6 @@ class Database:
 
 # 微社区
 class Forum:
-    # def __init__(self,channel_id=sys.argv[-2],puid=sys.argv[-1],group_id=0,DATABASE=True,recreate=True):
     def __init__(self,forum,DATABASE=True,recreate=True):
         self.config(forum)     
         self.canWrite = False

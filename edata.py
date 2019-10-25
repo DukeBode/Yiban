@@ -2,29 +2,23 @@ import sys,config
 from yiban import *
 
 # 话题评论
-def replys():
-    article = Article()
-    article.replys(EXCEL=config.xlsx)
+def replys():Article().replys(EXCEL=config.xlsx)
 
 # 话题内容
 def content():
-    article= Article()
-    title = article.content['article']['title']
-    id = article.content['article']['id']
-    Yiban.filesave(f'{id}{title}',article.content['article']['content'])
+    article = Article().content['article']
+    id,title = article['id'],article['title']
+    Yiban.filesave(f'{id}{title}',article['content'])
     print(f'请在当前目录，点击 {id}{title}.html 文件阅读内容。')
 
 # 获取微社区表头
 def heads():
-    school = Forum(config.forum,recreate=False)
-    head=school.sql('sql from sqlite_master')
+    head = Forum(config.forum,recreate=False).sql('sql from sqlite_master')
     for line in head:
         print(line[0].replace('CREATE TABLE ','\n表：').replace('(','\n列：('))
 
 # 获取微社区数据
-def articles():
-    school = Forum(config.forum)
-    school.getArticles(sys.argv[-1],size=config.size)
+def articles():Forum(config.forum).getArticles(sys.argv[-1],size=config.size)
 
 # SQL 查询
 def sql():
