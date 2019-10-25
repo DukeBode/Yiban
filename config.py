@@ -1,4 +1,8 @@
-# 微社区网址
+# 微社区的网址
+# forum='易班群主页网址'
+# forum='易班校方主页网址'
+# forum='易班微社区主页网址'
+# forum='http://www.yiban.cn/school/index/id/5000089'
 forum='http://www.yiban.cn/Org/orglistShow/puid/18396296/group_id/411965/type/forum'
 
 # 每次获取数量

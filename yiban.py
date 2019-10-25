@@ -119,9 +119,17 @@ class Forum:
     
     def config(self,forum):
         post_data=Yiban.param(forum)
-        if 'group_id' not in post_data:post_data['group_id']=0
+        if 'group_id' not in post_data:
+            if 'id' in post_data:
+                post_data['puid']=post_data['id']
+                del post_data['id']
+            post_data['group_id']=0
         data = Yiban.postUrl('http://www.yiban.cn/forum/api/getListAjax',post_data)
-        post_data['channel_id'] = data.json()['data']['channel_id']
+        try:
+            post_data['channel_id'] = data.json()['data']['channel_id']
+        except KeyError:
+            print('请确认 forum 参数后重试。')
+            exit()
         self.post = dict(
             channel_id=post_data['channel_id'], 
             group_id=post_data['group_id'], 
@@ -173,11 +181,7 @@ class Forum:
     # 发帖日期比较
     def compareDay(self,update,start):
         year = strftime('%Y-',localtime(time()))
-        if update[2]=='-':
-            update = year+update[:5]
-        else:
-            update = update[:10]
-        print(update)
+        update = year+update[:5] if update[2]=='-' else update[:10]
         return update < start
 
     # 字符串去布尔值
@@ -186,7 +190,6 @@ class Forum:
         val = val.replace('None','\'None\'')
         val = val.replace('True','\'True\'')
         val = val.replace('False','\'False\'')
-        # print(val)
         return val
 
     # 插入数据封装
