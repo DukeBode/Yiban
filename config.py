@@ -43,7 +43,7 @@ count_item={
 content=False
 
 # 浏览量最大间隔秒数,可为小数
-delay_max=2
+delay_max=100
 
 # 保存各归属方数据（未实现）
 # data=True
