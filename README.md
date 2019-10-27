@@ -41,6 +41,12 @@ python edata.py replys 易班话题链接
 python edata.py content 易班话题链接
 ```
 
+- 阅读指定话题
+
+```
+python edata.py clicks 阅读次数 易班话题链接
+```
+
 - 查看微社区数据表头
 
 ```sh

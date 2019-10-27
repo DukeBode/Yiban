@@ -42,6 +42,9 @@ count_item={
 # 启用内容关键词检索
 content=False
 
+# 浏览量最大间隔秒数,可为小数
+delay_max=2
+
 # 保存各归属方数据（未实现）
 # data=True
 

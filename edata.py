@@ -1,5 +1,6 @@
-import sys,config
+import sys,config,random
 from yiban import *
+import time
 
 # 话题评论
 def replys():Article().replys(EXCEL=config.xlsx)
@@ -10,6 +11,13 @@ def content():
     id,title = article['id'],article['title']
     Yiban.filesave(f'{id}{title}',article['content'])
     print(f'请在当前目录，点击 {id}{title}.html 文件阅读内容。')
+
+def clicks():
+    for index in range(int(sys.argv[-2])):
+        article = Article().content['article']
+        os.system('cls')
+        print(f"{index+1}：{article['title']}已阅读：{article['clicks']}次")
+        time.sleep(config.delay_max*random.random())
 
 # 获取微社区表头
 def heads():
@@ -90,6 +98,7 @@ def count():
 help = {
     'replys':replys,
     'content':content,
+    'clicks':clicks,
     'heads':heads,
     'articles':articles,
     'sql':sql,
@@ -99,11 +108,13 @@ help = {
 }
 
 if __name__=='__main__':
-    param = sys.argv
-    param = param[1] if len(param)>1 else ''
     try:
+        param = sys.argv[1]
         help.get(param.lower())()
+        exit()
+    except IndexError:
+        print('请输入参数')
     except TypeError:
         print('参数',param,'不存在！！！')
-        print('可用参数：',tuple(help.keys()))
+    print('可用参数：',tuple(help.keys()))
         

@@ -48,15 +48,13 @@ class Yiban:
     def postUrl(cls,url,post):
         try:
             web = requests.post(url, data=post)
-            state = web.status_code
-        except Exception as error:
+            return web.json()['data']
+        except requests.exceptions.ConnectionError as error:
             print("系统已退出，请确认网络连接正常！！！")
-            exit()
-        else:
-            if state!=200:
-                print("数据异常！！！")
-                exit()
-            return web
+        except KeyError:
+            print(web.status_code,'数据异常！！！')
+        exit()
+            
 
     # 获取链接中的参数
     # url 默认为最后一个参数
@@ -125,11 +123,7 @@ class Forum:
                 del post_data['id']
             post_data['group_id']=0
         data = Yiban.postUrl('http://www.yiban.cn/forum/api/getListAjax',post_data)
-        try:
-            post_data['channel_id'] = data.json()['data']['channel_id']
-        except KeyError:
-            print('请确认 forum 参数后重试。')
-            exit()
+        post_data['channel_id'] = data['channel_id']
         self.post = dict(
             channel_id=post_data['channel_id'], 
             group_id=post_data['group_id'], 
@@ -144,7 +138,7 @@ class Forum:
     @property
     def __tmp(self):
         data=Yiban.postUrl('https://www.yiban.cn/forum/article/listAjax', self.post)
-        return data.json()['data']['list']
+        return data['list']
     
     def __create(self,title,dict):
         if self.db and self.canWrite:
@@ -235,10 +229,9 @@ class Article:
     @property
     def content(self):
         data=self.post
-        if 'groupid' in data:del data['group_id']
         data['origin']=0
-        msg=Yiban.postUrl("http://www.yiban.cn/forum/article/showAjax",data)
-        return msg.json()['data']
+        if 'groupid' in data:del data['group_id']
+        return Yiban.postUrl("http://www.yiban.cn/forum/article/showAjax",data)
     
     # 评论
     def replys(self,EXCEL=False):
@@ -246,7 +239,7 @@ class Article:
         data['page']=data['order']=1
         data['size']=self.content['article']['replyCount']
         msg=Yiban.postUrl("http://www.yiban.cn/forum/reply/listAjax",data)
-        replys=msg.json()['data']['list']
+        replys=msg['list']
         data=list()
         try:
             data.append(tuple(replys['0'].keys()))
