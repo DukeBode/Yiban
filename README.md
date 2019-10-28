@@ -1,5 +1,8 @@
 # 易班微社区统计
 
+[官网](https://github.com/DukeBode/Yiban/) | 
+[官网(gitee)](https://gitee.com/DukeBode/Yiban) | 
+
 ### 说明
 
 1. 本程序在 Window 10 & Python 3.7 环境开发，未对其它环境测试。
