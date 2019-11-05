@@ -7,7 +7,7 @@ del rmtree
 setup(
     name = "yiban",
     # 正式版.公测版.修复版.调试次数
-    version = "0.1.2.31",
+    version = "0.1.2.32",
     url = 'https://dukebode.github.io',
     author = 'DukeBode',
     author_email = 'Duke123@aliyun.com',
@@ -25,4 +25,5 @@ setup(
         'Bug Reports': 'https://github.com/DukeBode/Yiban/issues',
         'Source': 'https://github.com/DukeBode/Yiban',
     },
+    python_requires='>=3.8',
 )
