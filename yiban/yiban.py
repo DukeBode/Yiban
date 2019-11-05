@@ -1,4 +1,3 @@
-print('yiban')
 import sys,os,re
 from time import strftime,localtime,time
 from urllib import request, parse, error
