@@ -1,10 +1,5 @@
-import importlib.util as imp
+print('yiban')
 import sys,os,re
-
-for item in ['openpyxl']:
-    if imp.find_spec(item) is None:
-        os.system(f'pip install -i https://pypi.tuna.tsinghua.edu.cn/simple {item}')
-
 from time import strftime,localtime,time
 from urllib import request, parse, error
 import openpyxl, sqlite3, json
