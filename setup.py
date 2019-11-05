@@ -1,9 +1,13 @@
 from setuptools import setup, find_packages
 
+from shutil import rmtree
+rmtree('dist',ignore_errors=True)
+del rmtree
+
 setup(
     name = "yiban",
-    # 正式版.公测版.修复版
-    version = "0.1.2.20",
+    # 正式版.公测版.修复版.调试次数
+    version = "0.1.2.31",
     url = 'https://dukebode.github.io',
     author = 'DukeBode',
     author_email = 'Duke123@aliyun.com',
