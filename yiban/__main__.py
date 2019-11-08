@@ -1,4 +1,3 @@
-# print('main')
 import sys
 from shutil import copytree,ignore_patterns
 from os.path import abspath,dirname,join
@@ -6,13 +5,14 @@ from os.path import abspath,dirname,join
 # print(abspath(sys.path[0]))
 try:
     copytree(
-        dirname(abspath(__file__)),
-        join(abspath(sys.path[0]),'Forum-Data'),
-        ignore=ignore_patterns(
-            "__init__.py",
-            "__main__.py",
-            "__pycache__"
-        )
+        join(dirname(abspath(__file__)),'program'),
+        join(abspath(sys.path[0]),'Forum-Data')
+        # ,
+        # ignore=ignore_patterns(
+        #     "__init__.py",
+        #     "__main__.py",
+        #     "__pycache__"
+        # )
     )
 except FileExistsError:
     print('文件已存在')
