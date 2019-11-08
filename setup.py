@@ -2,6 +2,7 @@ from setuptools import setup, find_packages
 
 # 删除 dist 文件夹
 from shutil import rmtree
+rmtree('Forum-Data',ignore_errors=True)
 rmtree('dist',ignore_errors=True)
 del rmtree
 
@@ -13,7 +14,7 @@ setup(
     name = "yiban",
     # 版本
     # 正式版.公测版.修复版.调试次数
-    version = "0.2.0.8",
+    version = "0.3.0.9",
     # 作者
     author = 'DukeBode',
     author_email = 'Duke123@aliyun.com',
