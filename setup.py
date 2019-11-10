@@ -1,20 +1,21 @@
-from setuptools import setup, find_packages
-
-# 删除 dist 文件夹
+# 删除 dist、Forum-Data 文件夹
 from shutil import rmtree
 rmtree('Forum-Data',ignore_errors=True)
 rmtree('dist',ignore_errors=True)
 del rmtree
 
-# 读取说明文档
 with open('README.md','r',encoding='utf-8') as f:
+    # 读取说明文档
     long_description = f.read()
+
+from setuptools import setup, find_packages
+from yiban import __version__
 
 setup(
     name = "yiban",
     # 版本
     # 正式版.公测版.修复版.调试次数
-    version = "0.3.0.9",
+    version = __version__,
     # 作者
     author = 'DukeBode',
     author_email = 'Duke123@aliyun.com',
