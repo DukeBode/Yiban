@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Python 下载 华为源</title>
+    
+</head>
+
+<body>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <div id="python">
+        <p>Python 64位下载地址：</p>
+        <p>https://mirrors.huaweicloud.com/python/{{ python_version }}/python-{{ python_version }}-amd64.exe</p>
+        <br>
+        <p>Python 64位压缩包：</p>
+        <p>https://mirrors.huaweicloud.com/python/{{ python_version }}/python-{{ python_version }}-embed-amd64.zip</p>
+        <br>
+        <p>Python 32位下载地址：</p>
+        <p>https://mirrors.huaweicloud.com/python/{{ python_version }}/python-{{ python_version }}.exe</p>
+        <br>
+        请输入要下载的 python 版本号：<input v-model="python_version">
+    </div>
+    <script>
+        var python = new Vue({
+            el: '#python',
+            data: {
+                python_version: '3.7.4'
+            }
+        })
+    </script>
+
+   
+</body>
+
+</html>

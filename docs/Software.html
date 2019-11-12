@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>huaweicloud</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+</head>
+
+<body>
+    <div id="python">
+        <a href="https://www.python.org/downloads/" target="_blank" rel="noopener noreferrer">Python</a>
+        <p>Python 64位下载地址：</p>
+        <p>https://mirrors.huaweicloud.com/python/{{ version }}/python-{{ version }}-amd64.exe</p>
+        <p>https://mirrors.huaweicloud.com/python/{{ version }}/python-{{ version }}-embed-amd64.zip</p>
+        请输入要下载的 python 版本号：<input v-model="version">
+    </div>
+    <script>
+        var python = new Vue({
+            el: '#python',
+            data: {
+                version: '3.7.4'
+            }
+        })
+    </script>
+    <br>
+    <div id="node">
+        <a href="https://nodejs.org" target="_blank" rel="noopener noreferrer">node</a>
+        <p>node 下载地址</p>
+        <p>https://mirrors.huaweicloud.com/nodejs/v{{ version }}/node-v{{ version }}-x64.msi</p>
+        <p>https://mirrors.huaweicloud.com/nodejs/v{{ version }}/node-v{{ version }}-win-x64.zip</p>
+        请输入要下载的 node 版本号：<input v-model="version">
+    </div>
+    <script>
+        var node = new Vue({
+            el: '#node',
+            data: {
+                version: '12.11.1'
+            }
+        })
+    </script>
+    <br>
+    <div id="yarn">
+        <a href="https://yarnpkg.com/zh-Hans/" target="_blank" rel="noopener noreferrer">yarn</a>
+        <p>Yarn 下载地址</p>
+        <p>https://mirrors.huaweicloud.com/yarn/v{{ version }}/yarn-{{ version }}.msi</p>
+        请输入要下载的 yarn 版本号：<input v-model="version">
+    </div>
+    <script>
+        var yarn = new Vue({
+            el: '#yarn',
+            data: {
+                version: '1.19.1'
+            }
+        })
+    </script>
+    <br>
+    <div id="git">
+        <a href="https://git-scm.com/" target="_blank" rel="noopener noreferrer">git</a>
+        <p>git 下载地址</p>
+        <p>https://mirrors.huaweicloud.com/git-for-windows/v{{ version }}.windows.1/Git-{{ version }}-64-bit.exe</p>
+        <p>https://mirrors.huaweicloud.com/git-for-windows/v{{ version }}.windows.1/MinGit-{{ version }}-64-bit.zip</p>
+        请输入要下载的 git 版本号：<input v-model="version">
+    </div>
+    <script>
+        var git = new Vue({
+            el: '#git',
+            data: {
+                version: '2.23.0'
+            }
+        })
+    </script>
+
+
+
+</body>
+
+</html>
