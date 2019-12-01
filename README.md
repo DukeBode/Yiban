@@ -2,6 +2,7 @@
 
 ```sh
 pip install yiban
+pip install -i https://pypi.org/simple -U yiban
 ```
 
 初始化
