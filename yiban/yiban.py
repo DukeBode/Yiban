@@ -2,6 +2,7 @@ import sys,os,re
 from time import strftime,localtime,time
 from urllib import request, parse, error
 import openpyxl, sqlite3, json
+import ssl
 
 class Yiban:
     # 格式化文件名
@@ -44,6 +45,8 @@ class Yiban:
     def fileread(cls,title):
         with open(title, 'r') as f:
             return f.readlines()
+
+    ssl._create_default_https_context = ssl._create_unverified_context
 
     # post 获取数据
     @classmethod
