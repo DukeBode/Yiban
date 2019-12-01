@@ -1,6 +1,7 @@
 # 删除 dist、Forum-Data 文件夹
 from shutil import rmtree
 rmtree('Forum-Data',ignore_errors=True)
+rmtree('build',ignore_errors=True)
 rmtree('dist',ignore_errors=True)
 del rmtree
 
