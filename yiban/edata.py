@@ -1,8 +1,8 @@
-from yiban.yiban import Yiban,Forum,Article
+from .yiban import Yiban,Forum,Article,File
 from asyncio import run,sleep,create_task,gather
 from random import random
 from sys import argv
-import config
+from . import config
 
 # 异步函数装饰器
 def asyncio(function):
@@ -18,7 +18,7 @@ def replys():Article().replys(EXCEL=config.xlsx)
 def content():
     article = Article().content['article']
     id,title = article['id'],article['title']
-    Yiban.filesave(f'{id}{title}',article['content'])
+    File.save(f'{id}{title}',article['content'])
     print(f'请在当前目录，点击 {id}{title}.html 文件阅读内容。')
 
 # 话题阅读
@@ -39,7 +39,7 @@ async def clicks():
         await gather(*tasks, return_exceptions=False)
     except AttributeError:
         tasks=[]
-        data = Yiban.fileread(argv[3])
+        data = File.read(argv[3])
         for url in data:
             task = create_task(click(num,url))
             tasks.append(task)
@@ -105,7 +105,7 @@ def demo():
         * from IMAGES WHERE ID="90723390"
     ''')
 # 清理非程序文件
-def clean():Yiban.clean(*config.del_file)
+def clean():File.clean(*config.del_file)
 
 # 数量统计
 def count():
@@ -123,9 +123,9 @@ def count():
         data.append((item,num))
     if data is not []:
         now = school.sql("time('now', 'localtime')")[0][0].replace(':','-')
-        Yiban.excel(f'count-{now}.xlsx',data)
+        File.save_excel(f'count-{now}.xlsx',data)
 
-def run():
+if __name__=='__main__':
     import argparse
     parser = argparse.ArgumentParser(prog='edata.py',description='Yiban Forum Data')
     subparsers = parser.add_subparsers(title='可选操作值',help='选择操作使用 -h 获取帮助') 
@@ -146,6 +146,3 @@ def run():
         args.func()
     except AttributeError:
         print("请输入值")
-
-if __name__=='__main__':
-    run()

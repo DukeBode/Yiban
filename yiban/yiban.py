@@ -1,7 +1,8 @@
+from .base import Database,Net,File
 import sys,os,re
 from time import strftime,localtime,time
 from urllib import request, parse, error
-import openpyxl, sqlite3, json
+# import openpyxl, sqlite3, json
 # import ssl
 
 class Yiban:
@@ -21,18 +22,18 @@ class Yiban:
     #             os.remove(file)
     #             print(f'已删除文件 {file}')
 
-    # excel格式存储
-    # data 二维数据
-    @classmethod
-    def excel(cls,filename,data):
-        if os.path.isfile(filename):
-            os.remove(filename)
-        wb = openpyxl.Workbook()
-        ws = wb.active
-        for item in data:
-            print(item)
-            ws.append(item)
-        wb.save(filename)
+    # # excel格式存储
+    # # data 二维数据
+    # @classmethod
+    # def excel(cls,filename,data):
+    #     if os.path.isfile(filename):
+    #         os.remove(filename)
+    #     wb = openpyxl.Workbook()
+    #     ws = wb.active
+    #     for item in data:
+    #         print(item)
+    #         ws.append(item)
+    #     wb.save(filename)
 
     # # 保存文件内容
     # @classmethod
@@ -52,26 +53,21 @@ class Yiban:
     @classmethod
     def postUrl(cls,url,data):
         try:
-            params = parse.urlencode(data).encode("utf-8")
-            response = request.urlopen(url,data=params)
-            content = json.loads(response.read().decode("utf-8"))
-            return content['data']
-        except error.URLError:
-            print("系统已退出，请确认网络连接正常！！！")
+            return Net.POST_json(url,data)['data']
         except KeyError:
             print('数据异常！！！')
         exit()
             
 
-    # 获取链接中的参数
-    @classmethod
-    def param(cls,url):
-        param=re.finditer('[^/]+/\d+',url)
-        data=dict()
-        for item in param:
-            content=item.group().split('/')
-            data[content[0]]=content[1]
-        return data
+    # # 获取链接中的参数
+    # @classmethod
+    # def param(cls,url):
+    #     param=re.finditer('[^/]+/\d+',url)
+    #     data=dict()
+    #     for item in param:
+    #         content=item.group().split('/')
+    #         data[content[0]]=content[1]
+    #     return data
     
 # # 数据库
 # class Database:
@@ -124,7 +120,7 @@ class Forum:
     
     # 初始化配置
     def config(self,forum):
-        post_data=Yiban.param(forum)
+        post_data=Net.param(forum)
         if 'group_id' not in post_data:
             if 'id' in post_data:
                 post_data['puid']=post_data['id']
@@ -231,7 +227,7 @@ class Forum:
 # 话题
 class Article:
     def __init__(self,data=sys.argv[-1]):
-        self.post=Yiban.param(data)
+        self.post=Net.param(data)
         if len(self.post) == 0:
             raise AttributeError    
     
@@ -261,7 +257,7 @@ class Article:
         except Exception as error:
             if EXCEL:
                 t=strftime('%H%M%S',localtime(time()))
-                Yiban.excel(f"reply{t}.xlsx",data)
+                File.save_excel(f"reply{t}.xlsx",data)
             else:
                 for item in data:print(item)
             exit()

@@ -1,6 +1,6 @@
 from .base import Net,parse
 from django.conf import settings
-import json
+# import json
 config = settings.YIBAN_APP_CONFIG
 
 class Yiban:

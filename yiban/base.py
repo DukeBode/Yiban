@@ -1,19 +1,36 @@
 from urllib import request, parse, error
 from time import strftime,localtime,time
 from os import listdir,getcwd,remove
+from os.path import isfile
+from openpyxl import Workbook
 import sqlite3
 import json
 import ssl
+import re
 
 class Net:
     ssl._create_default_https_context = ssl._create_unverified_context
+    
+    # 获取链接中的参数
+    @classmethod
+    def param(cls,url):
+        param=re.finditer(r'[^/]+/\d+',url)
+        data=dict()
+        for item in param:
+            content=item.group().split('/')
+            data[content[0]]=content[1]
+        return data
 
     @classmethod
     # POST 方法封装
     def POST_json(cls,url,data):
-        params = parse.urlencode(data).encode("utf-8")
-        response = request.urlopen(url,data=params)
-        return json.loads(response.read().decode("utf-8"))
+        try:
+            params = parse.urlencode(data).encode("utf-8")
+            response = request.urlopen(url,data=params)
+            return json.loads(response.read().decode("utf-8"))
+        except error.URLError:
+            print("系统已退出，请确认网络连接正常！！！")
+            return {}
 
     @classmethod
     # GET 方法封装
@@ -25,7 +42,7 @@ class Net:
 class File:
     # 格式化文件名
     @classmethod
-    def filename(cls,name):
+    def format_name(cls,name):
         symbols=tuple(r'\/:*?"<>|')
         for symbol in symbols:
             name = name.replace(symbol,'')
@@ -41,13 +58,26 @@ class File:
 
     # 保存文件内容
     @classmethod
-    def filesave(cls,title,content):
-        with open(f"{cls.filename(title)}.html", "w") as f:
+    def save(cls,title,content):
+        with open(f"{cls.format_name(title)}.html", "w") as f:
             f.write(content)
+    
+    # excel格式存储
+    # data 二维数据
+    @classmethod
+    def save_excel(cls,filename,data):
+        if isfile(filename):
+            remove(filename)
+        wb = Workbook()
+        ws = wb.active
+        for item in data:
+            print(item)
+            ws.append(item)
+        wb.save(filename)
 
     # 读取文件内容
     @classmethod
-    def fileread(cls,title):
+    def read(cls,title):
         with open(title, 'r') as f:
             return f.readlines()
 
@@ -56,10 +86,8 @@ class Database:
     def __init__(self,filename='yiban',recreate=True):
         t=strftime('%d',localtime(time()))
         self.db_name=f"{filename}{t}.db"
-        from os.path import isfile
         if isfile(self.db_name) and recreate==True:
             remove(self.db_name)
-        del isfile
         self.item={}
     
     # 执行 SQL
