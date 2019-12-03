@@ -1,4 +1,4 @@
-# 易班微社区统计 [官网](https://gitee.com/OSLUT/Yiban)
+# 易班微社区统计
 
 ### 声明
 
@@ -32,6 +32,12 @@ pip install yiban
 python -m yiban
 # 切换至 Forum-Data 程序文件夹
 cd Forum-Data
+```
+
+- 查看帮助
+
+```sh
+python edata.py -h
 ```
 
 - 统计话题评论（单篇）
