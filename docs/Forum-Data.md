@@ -1,8 +1,11 @@
 # 易班微社区统计 [官网](https://gitee.com/OSLUT/Yiban)
 
-### 说明
+### 声明
 
-1. 本程序仅供易班各高校统计微社区统计信息使用，所获数据应当避免外泄，及时删除。
+1. 本程序仅供各高校易班统计微社区易班信息使用，所获数据应当及时删除,避免外泄。
+
+### 前期准备
+
 1. 本程序在 Window 10 & Python 3.8 环境开发，未对其它环境测试。
 1. 以下操作全程用网，请确保网络连接正常，网络质量稳定。
 1. 如遇异常，请确认非网络问题后，截图留言。
@@ -16,22 +19,82 @@
 请确认安装好 Python 3 后，请在 powershell 
 > 在文件所在目录 按住 shift 键，并点击鼠标右键，选择 powershell 即可打开
 
-- 安装依赖
+- 安装依赖(仅首次执行）
 
 ```sh
 pip install yiban
 ```
 
-- 查看帮助
+- 初始化程序
 
 ```sh
-python -m yiban -h
+# 初始化 Forum-Data 文件夹
+python -m yiban
+# 切换至 Forum-Data 程序文件夹
+cd Forum-Data
 ```
 
-- 使用 Forum-Data [文档](Forum-Data)
+- 统计话题评论（单篇）
 
 ```sh
-python -m yiban forum
+python edata.py replys 易班话题链接
+```
+
+- 话题内容（单篇）
+
+```sh
+python edata.py content 易班话题链接
+```
+
+- 阅读指定话题(单篇)
+
+```
+python edata.py clicks 阅读次数 易班话题链接
+```
+
+- 阅读指定话题(多篇)
+
+```sh
+python edata.py clicks 阅读次数 存储话题链接的文本文档地址
+```
+
+- 查看微社区数据表头
+
+```sh
+python edata.py heads
+```
+
+- 获取微社区数据（请在查询数据之前执行）
+
+```sh
+python edata.py articles 开始年-月-日
+```
+
+提醒：执行 SQL 操作前，请确认已执行获取微社区数据的操作
+
+- SQL 查询数据(Ctrl + C 退出)
+
+```sh
+python edata.py sql
+```
+
+- SQL 查询各归属方发帖数量
+
+```sh
+python edata.py count
+```
+
+- SQL 查询示例
+
+```sh
+python edata.py demo
+```
+
+- 清理当前目录下所有的要删除的文件类型
+> 要删除的文件类型由 config.py 文件中的 del_file 指定
+
+```sh
+python edata.py clean
 ```
 
 ### FAQ
@@ -82,3 +145,13 @@ python -m yiban forum
 ```sh
 git clone -b Forum-Data https://gitee.com/OSLUT/Yiban.git
 ```
+
+---
+
+### 相关软件
+| 软件名 | 功能 | 链接 |
+| :---: | :---: | :---: |
+| Windows10 | 提供 bat 脚本环境 | [https://www.microsoft.com/zh-cn/software-download/windows10](https://www.microsoft.com/zh-cn/software-download/windows10) |
+| 7-zip | 解压本程序包 | [https://www.7-zip.org/](https://www.7-zip.org/) |
+| Python3 | 运行本 Python 程序 | [https://www.python.org/](https://www.python.org/) |
+| VScode | 编辑程序代码 | [https://code.visualstudio.com/](https://code.visualstudio.com/) |
