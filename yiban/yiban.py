@@ -2,24 +2,24 @@ import sys,os,re
 from time import strftime,localtime,time
 from urllib import request, parse, error
 import openpyxl, sqlite3, json
-import ssl
+# import ssl
 
 class Yiban:
-    # 格式化文件名
-    @classmethod
-    def filename(cls,name):
-        symbols=tuple('\/:*?"<>|')
-        for symbol in symbols:
-            name = name.replace(symbol,'')
-        return name
+    # # 格式化文件名
+    # @classmethod
+    # def filename(cls,name):
+    #     symbols=tuple('\/:*?"<>|')
+    #     for symbol in symbols:
+    #         name = name.replace(symbol,'')
+    #     return name
     
-    # 删除文件，参数名为后缀名
-    @classmethod
-    def clean(cls,*format):
-        for file in os.listdir(os.getcwd()):
-            if file[file.rfind('.')+1:] in format:
-                os.remove(file)
-                print(f'已删除文件 {file}')
+    # # 删除文件，参数名为后缀名
+    # @classmethod
+    # def clean(cls,*format):
+    #     for file in os.listdir(os.getcwd()):
+    #         if file[file.rfind('.')+1:] in format:
+    #             os.remove(file)
+    #             print(f'已删除文件 {file}')
 
     # excel格式存储
     # data 二维数据
@@ -34,19 +34,19 @@ class Yiban:
             ws.append(item)
         wb.save(filename)
 
-    # 保存文件内容
-    @classmethod
-    def filesave(cls,title,content):
-        with open(f"{cls.filename(title)}.html", "w") as f:
-            f.write(content)
+    # # 保存文件内容
+    # @classmethod
+    # def filesave(cls,title,content):
+    #     with open(f"{cls.filename(title)}.html", "w") as f:
+    #         f.write(content)
 
-    # 读取文件内容
-    @classmethod
-    def fileread(cls,title):
-        with open(title, 'r') as f:
-            return f.readlines()
+    # # 读取文件内容
+    # @classmethod
+    # def fileread(cls,title):
+    #     with open(title, 'r') as f:
+    #         return f.readlines()
 
-    ssl._create_default_https_context = ssl._create_unverified_context
+    # ssl._create_default_https_context = ssl._create_unverified_context
 
     # post 获取数据
     @classmethod
@@ -73,41 +73,41 @@ class Yiban:
             data[content[0]]=content[1]
         return data
     
-# 数据库
-class Database:
-    def __init__(self,filename='yiban',recreate=True):
-        t=strftime('%d',localtime(time()))
-        self.db_name=f"{filename}{t}.db"
-        if os.path.isfile(self.db_name) and recreate==True:
-            os.remove(self.db_name)
-        self.item={}
+# # 数据库
+# class Database:
+#     def __init__(self,filename='yiban',recreate=True):
+#         t=strftime('%d',localtime(time()))
+#         self.db_name=f"{filename}{t}.db"
+#         if os.path.isfile(self.db_name) and recreate==True:
+#             os.remove(self.db_name)
+#         self.item={}
     
-    # 执行 SQL
-    def __sql(self,db_name,sqls):
-        content=[]
-        db = sqlite3.connect(db_name)
-        c = db.cursor()
-        for sql in sqls:
-            content = c.execute(sql).fetchall()
-        db.commit()
-        db.close()
-        return content
+#     # 执行 SQL
+#     def __sql(self,db_name,sqls):
+#         content=[]
+#         db = sqlite3.connect(db_name)
+#         c = db.cursor()
+#         for sql in sqls:
+#             content = c.execute(sql).fetchall()
+#         db.commit()
+#         db.close()
+#         return content
     
-    # 创建表
-    def create(self,table,item):
-        self.__sql(self.db_name,[f'''create table {table}{item}'''])
-        self.item[table]=item
+#     # 创建表
+#     def create(self,table,item):
+#         self.__sql(self.db_name,[f'''create table {table}{item}'''])
+#         self.item[table]=item
     
-    # 插入数据
-    def insert(self,table,data):
-        str=[]
-        for val in data:
-            str.append(f'''INSERT INTO {table} {self.item[table]} VALUES {val}''')
-        self.__sql(self.db_name,str)
+#     # 插入数据
+#     def insert(self,table,data):
+#         str=[]
+#         for val in data:
+#             str.append(f'''INSERT INTO {table} {self.item[table]} VALUES {val}''')
+#         self.__sql(self.db_name,str)
 
-    # 数据查询
-    def select(self,data):
-        return self.__sql(self.db_name,[f'''SELECT {data}'''])
+#     # 数据查询
+#     def select(self,data):
+#         return self.__sql(self.db_name,[f'''SELECT {data}'''])
 
 # 微社区
 class Forum:
