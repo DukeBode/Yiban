@@ -38,6 +38,15 @@ class Net:
         string = f'{url}?{parse.urlencode(data)}'
         response = request.urlopen(string)
         return json.loads(response.read())
+    
+    # post 获取数据
+    @classmethod
+    def postUrl(cls,url,data):
+        try:
+            return cls.POST_json(url,data)['data']
+        except KeyError:
+            print('数据异常！！！')
+        exit()
 
 class File:
     # 格式化文件名

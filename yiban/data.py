@@ -1,109 +1,6 @@
-from .base import Database,Net,File
-import sys,os,re
+from .base import Net,Database,File
 from time import strftime,localtime,time
-from urllib import request, parse, error
-# import openpyxl, sqlite3, json
-# import ssl
-
-class Yiban:
-    # # 格式化文件名
-    # @classmethod
-    # def filename(cls,name):
-    #     symbols=tuple('\/:*?"<>|')
-    #     for symbol in symbols:
-    #         name = name.replace(symbol,'')
-    #     return name
-    
-    # # 删除文件，参数名为后缀名
-    # @classmethod
-    # def clean(cls,*format):
-    #     for file in os.listdir(os.getcwd()):
-    #         if file[file.rfind('.')+1:] in format:
-    #             os.remove(file)
-    #             print(f'已删除文件 {file}')
-
-    # # excel格式存储
-    # # data 二维数据
-    # @classmethod
-    # def excel(cls,filename,data):
-    #     if os.path.isfile(filename):
-    #         os.remove(filename)
-    #     wb = openpyxl.Workbook()
-    #     ws = wb.active
-    #     for item in data:
-    #         print(item)
-    #         ws.append(item)
-    #     wb.save(filename)
-
-    # # 保存文件内容
-    # @classmethod
-    # def filesave(cls,title,content):
-    #     with open(f"{cls.filename(title)}.html", "w") as f:
-    #         f.write(content)
-
-    # # 读取文件内容
-    # @classmethod
-    # def fileread(cls,title):
-    #     with open(title, 'r') as f:
-    #         return f.readlines()
-
-    # ssl._create_default_https_context = ssl._create_unverified_context
-
-    # post 获取数据
-    @classmethod
-    def postUrl(cls,url,data):
-        try:
-            return Net.POST_json(url,data)['data']
-        except KeyError:
-            print('数据异常！！！')
-        exit()
-            
-
-    # # 获取链接中的参数
-    # @classmethod
-    # def param(cls,url):
-    #     param=re.finditer('[^/]+/\d+',url)
-    #     data=dict()
-    #     for item in param:
-    #         content=item.group().split('/')
-    #         data[content[0]]=content[1]
-    #     return data
-    
-# # 数据库
-# class Database:
-#     def __init__(self,filename='yiban',recreate=True):
-#         t=strftime('%d',localtime(time()))
-#         self.db_name=f"{filename}{t}.db"
-#         if os.path.isfile(self.db_name) and recreate==True:
-#             os.remove(self.db_name)
-#         self.item={}
-    
-#     # 执行 SQL
-#     def __sql(self,db_name,sqls):
-#         content=[]
-#         db = sqlite3.connect(db_name)
-#         c = db.cursor()
-#         for sql in sqls:
-#             content = c.execute(sql).fetchall()
-#         db.commit()
-#         db.close()
-#         return content
-    
-#     # 创建表
-#     def create(self,table,item):
-#         self.__sql(self.db_name,[f'''create table {table}{item}'''])
-#         self.item[table]=item
-    
-#     # 插入数据
-#     def insert(self,table,data):
-#         str=[]
-#         for val in data:
-#             str.append(f'''INSERT INTO {table} {self.item[table]} VALUES {val}''')
-#         self.__sql(self.db_name,str)
-
-#     # 数据查询
-#     def select(self,data):
-#         return self.__sql(self.db_name,[f'''SELECT {data}'''])
+import re,sys
 
 # 微社区
 class Forum:
@@ -126,7 +23,7 @@ class Forum:
                 post_data['puid']=post_data['id']
                 del post_data['id']
             post_data['group_id']=0
-        data = Yiban.postUrl('http://www.yiban.cn/forum/api/getListAjax',post_data)
+        data = Net.postUrl('http://www.yiban.cn/forum/api/getListAjax',post_data)
         post_data['channel_id'] = data['channel_id']
         self.post = dict(
             channel_id=post_data['channel_id'], 
@@ -141,7 +38,7 @@ class Forum:
 
     @property
     def __tmp(self):
-        data=Yiban.postUrl('https://www.yiban.cn/forum/article/listAjax', self.post)
+        data=Net.postUrl('https://www.yiban.cn/forum/article/listAjax', self.post)
         return data['list']
     
     def __create(self,title,dict):
@@ -237,14 +134,14 @@ class Article:
         data=self.post
         data['origin']=0
         if 'groupid' in data:del data['group_id']
-        return Yiban.postUrl("http://www.yiban.cn/forum/article/showAjax",data)
+        return Net.postUrl("http://www.yiban.cn/forum/article/showAjax",data)
     
     # 评论
     def replys(self,EXCEL=False):
         data=self.post
         data['page']=data['order']=1
         data['size']=self.content['article']['replyCount']
-        msg=Yiban.postUrl("http://www.yiban.cn/forum/reply/listAjax",data)
+        msg=Net.postUrl("http://www.yiban.cn/forum/reply/listAjax",data)
         replys=msg['list']
         data=list()
         try:
@@ -261,8 +158,3 @@ class Article:
             else:
                 for item in data:print(item)
             exit()
-
-
-if __name__=='__main__':
-    print('请使用edata')
-    exit()

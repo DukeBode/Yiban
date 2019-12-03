@@ -1,4 +1,5 @@
-from .yiban import Yiban,Forum,Article,File
+from .data import Forum,Article
+from .base import File
 from asyncio import run,sleep,create_task,gather
 from random import random
 from sys import argv
@@ -6,9 +7,7 @@ from . import config
 
 # 异步函数装饰器
 def asyncio(function):
-    if function.__name__ not in argv:
-        return IndexError
-    loop = run(function())
+    run(function())
     exit()
 
 # 话题评论
@@ -43,7 +42,7 @@ async def clicks():
         for url in data:
             task = create_task(click(num,url))
             tasks.append(task)
-        loop = await gather(*tasks, return_exceptions=True)
+        await gather(*tasks, return_exceptions=True)
     except IndexError:
         print('请确认参数完整')
     except ValueError:
@@ -105,6 +104,7 @@ def demo():
         * from IMAGES WHERE ID="90723390"
     ''')
 # 清理非程序文件
+
 def clean():File.clean(*config.del_file)
 
 # 数量统计
@@ -125,22 +125,28 @@ def count():
         now = school.sql("time('now', 'localtime')")[0][0].replace(':','-')
         File.save_excel(f'count-{now}.xlsx',data)
 
+def help(function,**argv):
+    item=helps.add_parser(function.__name__,help=argv['help'])
+    arguments = argv['arguments'] if 'arguments' in argv else None
+    for val in arguments:item.add_argument(val,help=arguments[val])
+    item.set_defaults(func=function)
+
 if __name__=='__main__':
     import argparse
     parser = argparse.ArgumentParser(prog='edata.py',description='Yiban Forum Data')
-    subparsers = parser.add_subparsers(title='可选操作值',help='选择操作使用 -h 获取帮助') 
+    helps = parser.add_subparsers(title='可选操作值',help='选择操作使用 -h 获取帮助') 
 
-    subparser = subparsers.add_parser('clicks',help='阅读指定话题').set_defaults(func=clicks)
-    subparser = subparsers.add_parser('replys',help='统计话题评论').set_defaults(func=replys)
-    subparser = subparsers.add_parser('content',help='获取话题内容').set_defaults(func=content)
-    subparser = subparsers.add_parser('heads',help='查看微社区数据表表头').set_defaults(func=heads)
-    subparser = subparsers.add_parser('articles',help='获取微社区数据')
-    subparser.add_argument('date',help='时间')
-    subparser.set_defaults(func=articles)
-    subparser = subparsers.add_parser('count',help='统计各归属方发帖数量').set_defaults(func=count)
-    subparser = subparsers.add_parser('demo',help='常用查询语句示例').set_defaults(func=demo)
-    subparser = subparsers.add_parser('sql',help='使用 SQL 语句查询发帖情况').set_defaults(func=sql)
-    subparser = subparsers.add_parser('clean',help=f'清理{config.del_file}文件').set_defaults(func=clean)
+    help = helps.add_parser('clicks',help='阅读指定话题').set_defaults(func=clicks)
+    help = helps.add_parser('replys',help='统计话题评论').set_defaults(func=replys)
+    help = helps.add_parser('content',help='获取话题内容').set_defaults(func=content)
+    help = helps.add_parser('heads',help='查看微社区数据表表头').set_defaults(func=heads)
+    help = helps.add_parser('articles',help='获取微社区数据')
+    help.add_argument('date',help='时间')
+    help.set_defaults(func=articles)
+    help = helps.add_parser('count',help='统计各归属方发帖数量').set_defaults(func=count)
+    help = helps.add_parser('demo',help='常用查询语句示例').set_defaults(func=demo)
+    help = helps.add_parser('sql',help='使用 SQL 语句查询发帖情况').set_defaults(func=sql)
+    help = helps.add_parser('clean',help=f'清理{config.del_file}文件').set_defaults(func=clean)
     args = parser.parse_args()
     try:
         args.func()
