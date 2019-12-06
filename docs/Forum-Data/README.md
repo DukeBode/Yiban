@@ -29,7 +29,7 @@ pip install yiban
 
 ```sh
 # 初始化 Forum-Data 文件夹
-python -m yiban
+python -m yiban forum
 # 切换至 Forum-Data 程序文件夹
 cd Forum-Data
 ```
