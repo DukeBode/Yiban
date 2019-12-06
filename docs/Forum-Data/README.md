@@ -14,7 +14,6 @@
 
 ### 功能使用说明
 
-提醒：使用之前请使用贵微社区定制的 [config.py](config.py) 覆盖系统自带的 config.py 文件
 
 请确认安装好 Python 3 后，请在 powershell 
 > 在文件所在目录 按住 shift 键，并点击鼠标右键，选择 powershell 即可打开
@@ -33,6 +32,8 @@ python -m yiban forum
 # 切换至 Forum-Data 程序文件夹
 cd Forum-Data
 ```
+
+- 将配置好的 [config.py](config.py) 文件放入工作目录
 
 - 查看帮助
 
