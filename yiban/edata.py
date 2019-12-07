@@ -162,7 +162,7 @@ if __name__=='__main__':
     help = helps.add_parser('sql',help='使用 SQL 语句查询发帖情况').set_defaults(func=sql)
     help = helps.add_parser('clean',help=f'清理{config.del_file}文件').set_defaults(func=clean)
     args = parser.parse_args()
-    try:
-        args.func()
-    except AttributeError:
-        print("请输入值")
+    if 'func' not in args:
+        print('请输入值！！！')
+        exit()
+    args.func()
