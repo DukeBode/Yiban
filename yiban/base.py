@@ -105,7 +105,10 @@ class Database:
         db = sqlite3.connect(db_name)
         c = db.cursor()
         for sql in sqls:
-            content = c.execute(sql).fetchall()
+            try:
+                content = c.execute(sql).fetchall()
+            except:
+                continue
         db.commit()
         db.close()
         return content

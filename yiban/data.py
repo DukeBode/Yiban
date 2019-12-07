@@ -68,7 +68,7 @@ class Forum:
         try:
             data = self.db.select(key)
             if not EXCEL:return data
-            Yiban.excel(f"Forum-data{nth}.xlsx",data)
+            File.save_excel(f"Forum-data{nth}.xlsx",data)
         except:
             print('输入错误！！！')
         return []
