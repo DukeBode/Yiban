@@ -1,3 +1,11 @@
+<!--
+ * @Author: your name
+ * @Date: 2020-04-25 09:19:10
+ * @LastEditTime: 2020-04-25 10:20:38
+ * @LastEditors: your name
+ * @Description: In User Settings Edit
+ * @FilePath: \Yiban\docs\README.md
+ -->
 ### 说明
 
 1. 本程序仅供易班各高校统计微社区统计信息使用，所获数据应当避免外泄，及时删除。
@@ -12,6 +20,12 @@
 
 ```sh
 pip install yiban
+```
+
+- 更新至最新版
+
+```
+pip install -i https://pypi.org/simple -U yiban
 ```
 
 - 查看帮助
