@@ -1,3 +1,11 @@
+'''
+@Author: DukeBode
+@Date: 2020-04-25 09:19:10
+@LastEditTime: 2020-04-25 10:14:11
+@LastEditors: Please set LastEditors
+@Description: In User Settings Edit
+@FilePath: \Yiban\setup.py
+'''
 # 删除 dist、Forum-Data 文件夹
 from shutil import rmtree
 rmtree('Forum-Data',ignore_errors=True)
@@ -55,6 +63,7 @@ setup(
     project_urls={  # Optional
         'Bug Reports': 'https://github.com/DukeBode/Yiban/issues',
         'Source': 'https://github.com/DukeBode/Yiban',
+        'Documentation': 'https://dukebode.github.io/Yiban',
     },
     python_requires='>=3.8',
 )
