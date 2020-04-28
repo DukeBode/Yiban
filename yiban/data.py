@@ -73,8 +73,15 @@ class Forum:
             print('输入错误！！！')
         return []
 
-    # 发帖日期比较
     def compareDay(self,update,start):
+        '''
+        @description:
+            发帖日期比较 
+        @param 
+            update: 更新日期
+            start: 开始日期
+        @return: 
+        '''
         year = strftime('%Y-',localtime(time()))
         update = year+update[:5] if update[2]=='-' else update[:10]
         print(update)
@@ -123,6 +130,10 @@ class Forum:
 
 # 话题
 class Article:
+    '''
+    @description: 
+        易班微社区话题
+    '''
     def __init__(self,data=sys.argv[-1]):
         self.post=Net.param(data)
         if len(self.post) == 0:

@@ -11,9 +11,15 @@ import re
 class Net:
     ssl._create_default_https_context = ssl._create_unverified_context
     
-    # 获取链接中的参数
     @classmethod
     def param(cls,url):
+        '''
+        @description:
+            获取 GET 链接中的参数 
+        @param 
+            url: GET 链接
+        @return: 
+        '''
         param=re.finditer(r'[^/]+/\d+',url)
         data=dict()
         for item in param:
@@ -22,8 +28,15 @@ class Net:
         return data
 
     @classmethod
-    # POST 方法封装
     def POST_json(cls,url,data):
+        '''
+        @description: 
+            POST 方法获取 json 数据
+        @param
+            url: POST 地址
+            data: POST 数据
+        @return: 
+        '''
         try:
             params = parse.urlencode(data).encode("utf-8")
             response = request.urlopen(url,data=params)
@@ -57,9 +70,15 @@ class File:
             name = name.replace(symbol,'')
         return name
     
-    # 删除文件，参数名为后缀名
     @classmethod
     def clean(cls,*format):
+        '''
+        @description: 
+            删除指定后缀的文件
+        @param
+            format: 后缀名
+        @return: 
+        '''
         for file in listdir(getcwd()):
             if file[file.rfind('.')+1:] in format:
                 remove(file)

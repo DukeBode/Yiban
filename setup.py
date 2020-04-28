@@ -1,7 +1,7 @@
 '''
 @Author: DukeBode
 @Date: 2020-04-25 09:19:10
-@LastEditTime: 2020-04-25 10:14:11
+@LastEditTime: 2020-04-28 14:29:58
 @LastEditors: Please set LastEditors
 @Description: In User Settings Edit
 @FilePath: \Yiban\setup.py
@@ -29,7 +29,7 @@ setup(
     author = 'DukeBode',
     author_email = 'Duke123@aliyun.com',
     # 描述
-    description='Yiban Api',
+    description='Yiban Tools',
     long_description=long_description,
     long_description_content_type="text/markdown",
     # 项目网址
