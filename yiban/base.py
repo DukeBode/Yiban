@@ -2,7 +2,6 @@ from urllib import request, parse, error
 from time import strftime,localtime,time
 from os import listdir,getcwd,remove
 from os.path import isfile
-from openpyxl import Workbook
 import sqlite3
 import json
 import ssl
@@ -94,6 +93,7 @@ class File:
     # data 二维数据
     @classmethod
     def save_excel(cls,filename,data):
+        from openpyxl import Workbook
         if isfile(filename):
             remove(filename)
         wb = Workbook()

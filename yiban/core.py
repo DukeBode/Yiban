@@ -1,8 +1,8 @@
 '''
 @Author: your name
 @Date: 2020-05-07 23:08:55
-@LastEditTime: 2020-05-08 00:43:39
-@LastEditors: your name
+@LastEditTime: 2020-05-08 00:51:39
+@LastEditors: Please set LastEditors
 @Description: In User Settings Edit
 @FilePath: \Yiban\yiban\core.py
 '''
