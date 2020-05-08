@@ -1,7 +1,7 @@
 '''
 @Author: DukeBode
 @Date: 2020-04-25 09:19:10
-@LastEditTime: 2020-04-28 14:29:58
+@LastEditTime: 2020-05-08 18:23:18
 @LastEditors: Please set LastEditors
 @Description: In User Settings Edit
 @FilePath: \Yiban\setup.py
@@ -50,7 +50,9 @@ setup(
         'Intended Audience :: Education',
     ],
     install_requires=[
-        'openpyxl'
+        'openpyxl',
+        'ruamel.yaml',
+        'beautifulsoup4'
     ],
     # scripts=['yiban/edata.py'],
     # entry_points={
