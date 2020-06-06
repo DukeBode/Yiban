@@ -1,7 +1,7 @@
 '''
 @Author: your name
 @Date: 2020-04-28 14:57:08
-@LastEditTime: 2020-06-06 09:13:09
+@LastEditTime: 2020-06-06 13:07:24
 @LastEditors: Please set LastEditors
 @Description: In User Settings Edit
 @FilePath: \Yiban\main.py
@@ -22,7 +22,7 @@ cli = WWW()
 
 # opener.addheaders = [headers]
 
-def login_pr(content=False):
+def login_dict(account,password,captcha=None):
     '''
     @description: 
         获取 RSA 公钥，和时间
@@ -31,9 +31,18 @@ def login_pr(content=False):
     @return: 
     '''
     login_re = re.compile('''(?sm)data-keys='([\s\S]*?)'.*'(.*?)'>''')
-    if not content:
-        content = cli.login()
-    return login_re.search(content).groups()
+    content = cli.login() if captcha is None else captcha
+    data = login_re.search(content)
+    data_keys,data_keys_time = data.groups()
+    loginCaptcha(data_keys_time)
+    captcha = None if captcha is None else input('请输入验证码：')
+    return {
+        'account': account,
+        'password': cli.rsaEncrypt(password,data_keys),
+        'captcha': captcha,
+        'keysTime': data_keys_time,
+        # 'is_rember': 1
+    }
 
 def loginCaptcha(keyTime):
     data = cli.captcha(keyTime)
@@ -42,34 +51,11 @@ def loginCaptcha(keyTime):
         f.flush()
         f.close()
 
-def login_page(login_dict):
-    content = cli.doLoginAjax(login_dict)
+def login(account,password,data=None):
+    content = cli.doLoginAjax(login_dict(account,password,data))
     try:
         data = json.loads(content)
-        # print(data)
-        # for item in cookie:
-        #     print(f'{item.name}={item.value}')
     except:
-        return content
-    return None
-
-def login(account,password,data=None):
-    data_keys,data_keys_time = login_pr(data)
-    loginCaptcha(data_keys_time)
-    if data is not None:
-        captcha = input('请输入验证码：')
-    else:
-        captcha = None
-    login_dict = {
-        'account': account,
-        'password': cli.rsaEncrypt(password,data_keys),
-        'captcha': captcha,
-        'keysTime': data_keys_time,
-        # 'is_rember': 1
-    }
-    content = login_page(login_dict)
-    if content is not None:
-        print(1)
         login(account,password,content)
     
 def checkin():
@@ -100,16 +86,13 @@ if __name__ == "__main__":
     from ruamel.yaml import YAML
 
     config=None
-    with open('config.yml','r',encoding="utf-8") as f:
-        content = cli.getLogin()
-        tmp = json.loads(content)
-        print(tmp)
+    with open('config.yml','r',encoding="utf-8") as f: 
+        print(cli.getLogin())
         config =YAML(typ='safe').load(f.read())
         login(config['account'],config['password'])
-        print(checkin())
+        checkin()
         content = cli.getLogin()
-        tmp = json.loads(content)
-        print(tmp['data']['isLogin'])
+        print(content['data']['isLogin'],content['data']['user'])
     # 删除验证码
     from yiban.base import File
     File.clean('png')

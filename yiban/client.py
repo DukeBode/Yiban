@@ -1,7 +1,7 @@
 '''
 @Author: your name
 @Date: 2020-05-08 00:05:45
-@LastEditTime: 2020-05-08 17:04:32
+@LastEditTime: 2020-06-06 11:09:57
 @LastEditors: Please set LastEditors
 @Description: In User Settings Edit
 @FilePath: \Yiban\yiban\client.py
@@ -40,6 +40,7 @@ class WWW(Uri):
 
     def getLogin(self):
         url = self.www('ajax/my/getLogin')
+        return self.json(url)
         req = request.Request(url,method='POST')
         return super().data(req)
         
@@ -67,12 +68,8 @@ class User:
     def getLogin(self):
         yiban = self.yiban
         url = yiban.www('ajax/my/getLogin')
-        
         req = request.Request(url,method='POST')
         return json.loads(yiban.data(req))
-    
-    def login(self):
-        pass
 
     def checkin(self):
         yiban = self.yiban
