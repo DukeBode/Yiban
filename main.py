@@ -1,8 +1,8 @@
 '''
 @Author: your name
 @Date: 2020-04-28 14:57:08
-@LastEditTime: 2020-05-08 18:30:54
-@LastEditors: your name
+@LastEditTime: 2020-06-06 09:13:09
+@LastEditors: Please set LastEditors
 @Description: In User Settings Edit
 @FilePath: \Yiban\main.py
 '''
@@ -46,7 +46,7 @@ def login_page(login_dict):
     content = cli.doLoginAjax(login_dict)
     try:
         data = json.loads(content)
-        print(data)
+        # print(data)
         # for item in cookie:
         #     print(f'{item.name}={item.value}')
     except:
@@ -72,12 +72,18 @@ def login(account,password,data=None):
         print(1)
         login(account,password,content)
     
-    
-
 def checkin():
+    '''
+    @description: 签到
+    @param {type} 
+    @return: 
+    '''
     url = cli.www('ajax/checkin/checkin')
     tmp = cli.json(url)
     from bs4 import BeautifulSoup
+    if tmp['code'] == 202:
+        print(tmp['message'])
+        return None
     soup = BeautifulSoup(tmp['data']['survey'],'html.parser')
     for a in soup.select('.survey-option'):
         data={
@@ -91,15 +97,20 @@ def checkin():
     return cli.data(req)
 
 if __name__ == "__main__":
-    # cli.getCaptcha('1588867188.14')
-    # content = cli.getLogin()
-    # tmp = json.loads(content)
-    # print(tmp['data']['isLogin'])
-    # print(checkin())
     from ruamel.yaml import YAML
 
     config=None
     with open('config.yml','r',encoding="utf-8") as f:
+        content = cli.getLogin()
+        tmp = json.loads(content)
+        print(tmp)
         config =YAML(typ='safe').load(f.read())
         login(config['account'],config['password'])
+        print(checkin())
+        content = cli.getLogin()
+        tmp = json.loads(content)
+        print(tmp['data']['isLogin'])
+    # 删除验证码
+    from yiban.base import File
+    File.clean('png')
     # page=config['page_dir']
