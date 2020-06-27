@@ -25,6 +25,11 @@ class Net:
             content=item.group().split('/')
             data[content[0]]=content[1]
         return data
+    
+    @classmethod
+    def params_by_GET(cls,url):
+        result = parse.urlparse(url)
+        return parse.parse_qs(result.query,True)
 
     @classmethod
     def POST_json(cls,url,data):

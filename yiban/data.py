@@ -134,25 +134,33 @@ class Article:
     @description: 
         易班微社区话题
     '''
-    def __init__(self,data=sys.argv[-1]):
-        self.post=Net.param(data)
+    def __init__(self,article_url=sys.argv[-1]):
+        self.post=Net.param(article_url)
         if len(self.post) == 0:
             raise AttributeError    
     
     # 内容
     @property
     def content(self):
+        try:
+            url = URL.LOGIN_CAPTCHA
+        except:
+            url = 'http://www.yiban.cn/forum/article/showAjax'
         data=self.post
         data['origin']=0
         if 'groupid' in data:del data['group_id']
-        return Net.postUrl("http://www.yiban.cn/forum/article/showAjax",data)
+        return Net.postUrl(url,data)
     
     # 评论
     def replys(self,EXCEL=False):
+        try:
+            url = URL.LOGIN_CAPTCHA
+        except:
+            url = 'http://www.yiban.cn/forum/reply/listAjax'
         data=self.post
         data['page']=data['order']=1
         data['size']=self.content['article']['replyCount']
-        msg=Net.postUrl("http://www.yiban.cn/forum/reply/listAjax",data)
+        msg=Net.postUrl(url,data)
         replys=msg['list']
         data=list()
         try:
@@ -169,3 +177,6 @@ class Article:
             else:
                 for item in data:print(item)
             exit()
+
+class Reply:
+    pass
