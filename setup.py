@@ -27,7 +27,7 @@ setup(
     version = __version__,
     # 作者
     author = 'DukeBode',
-    author_email = 'Duke123@aliyun.com',
+    author_email = 'DukeBode@hotmail.com',
     # 描述
     description='Yiban Tools',
     long_description=long_description,
