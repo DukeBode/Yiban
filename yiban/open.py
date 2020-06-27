@@ -4,19 +4,6 @@ from django.conf import settings
 config = settings.YIBAN_APP_CONFIG
 
 class Yiban:
-    # @classmethod
-    # # POST 方法封装
-    # def POST(cls,url,data):
-    #     params = parse.urlencode(data).encode("utf-8")
-    #     response = request.urlopen(url,data=params)
-    #     return json.loads(response.read().decode("utf-8"))
-
-    # @classmethod
-    # # GET 方法封装
-    # def GET(cls,url,data):
-    #     string = f'{url}?{parse.urlencode(data)}'
-    #     response = request.urlopen(string)
-    #     return json.loads(response.read())
 
     @classmethod
     # GET重定向授权页面
