@@ -76,6 +76,22 @@
         var git = new Vue({
             el: '#git',
             data: {
+                version: '2.27.0'
+            }
+        })
+    </script>
+    <br>
+    <div id="dart">
+        <a href="https://git-scm.com/" target="_blank" rel="noopener noreferrer">git</a>
+        <p>git 下载地址</p>
+        <p>https://storage.googleapis.com/dart-archive/channels/stable/release/2.8.4/sdk/dartsdk-windows-X64-release.zip</p>
+        <p>https://mirrors.huaweicloud.com/git-for-windows/v{{ version }}.windows.1/MinGit-{{ version }}-64-bit.zip</p>
+        请输入要下载的 git 版本号：<input v-model="version">
+    </div>
+    <script>
+        var git = new Vue({
+            el: '#dart',
+            data: {
                 version: '2.26.2'
             }
         })
